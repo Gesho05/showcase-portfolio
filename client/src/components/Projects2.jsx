@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from 'react-dom';
-import CrossyImg from "../assets/images/Crossy.png";
-import CrossyComputer from "../assets/images/computer-crossy.png";
+import CrossyImg from "../assets/images/OB-cover.png";
+import CrossyComputer from "../assets/images/OB-computer.png";
 import CrossyComputer2 from "../assets/images/computer-crossy2.png";
 import CrossyPhone from "../assets/images/phone-crossy.png";
 
-export default function Projects() {
+export default function Projects2() {
   const [selected, setSelected] = useState(null);
   const [visible, setVisible] = useState(false);
   const [modalActive, setModalActive] = useState(false);
@@ -62,9 +62,9 @@ export default function Projects() {
   }, [selected]);
 
   const projectData = {
-    title: "CROSSY ROAD CLONE",
+    title: "OWEN BRYCE PROJECT",
     description:
-      'A CLONE OF THE POPULAR MOBILE GAME "CROSSY ROAD", BUILT AS A WEB APPLICATION USING THREE.JS',
+      'A PROTOTYPE WEBSITE CREATED FOR THE ARTIST OWEBN BRTYCE',
     image: CrossyImg,
     // set this to the live/demo URL for the project
     url: 'https://crossy-road-clone-steel.vercel.app'
@@ -86,7 +86,7 @@ export default function Projects() {
           className="rounded-xl h-[230px] w-full object-cover"
           src={CrossyImg}
           alt="Project Crossy Clone Thumbnail"
-          style={{ objectPosition: "center 65%" }}
+          style={{ objectPosition: "center 10%" }}
         />
         <div className="p-4 flex flex-col justify-between flex-grow">
           <h2 className="font-helvetica-compressed text-3xl text-left mb-20 font-extrabold tracking-wide">{projectData.title}</h2>

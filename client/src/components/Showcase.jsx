@@ -1,5 +1,6 @@
 import React from "react";
 import Projects from "./Projects"; // we'll reuse your card component
+import Projects2 from "./Projects2";
 
 export default function Showcase() {
   return (
@@ -16,9 +17,9 @@ export default function Showcase() {
           <Projects />
         </div>
         <div className="transform translate-y-10 md:translate-y-16">
-          <Projects />
+          <Projects2 />
         </div>
-        <Projects />
+        <Projects2 />
       </div>
 
       {/* Footer Title */}
