@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { createPortal } from 'react-dom';
 import CrossyImg from "../assets/images/Crossy.png";
+import CrossyComputer from "../assets/images/computer-crossy.png";
+import CrossyComputer2 from "../assets/images/computer-crossy2.png";
+import CrossyPhone from "../assets/images/phone-crossy.png";
 
 export default function Projects() {
   const [selected, setSelected] = useState(null);
@@ -17,6 +21,8 @@ export default function Projects() {
     description:
       'A CLONE OF THE POPULAR MOBILE GAME "CROSSY ROAD", BUILT AS A WEB APPLICATION USING THREE.JS',
     image: CrossyImg,
+    // set this to the live/demo URL for the project
+    url: 'https://crossy-road-clone-steel.vercel.app'
   };
 
   return (
@@ -45,11 +51,10 @@ export default function Projects() {
         </div>
       </div>
 
-      {selected && (
+      {selected && createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           {/* Background Overlay (lighten the page behind the modal) */}
           <div
-            data-modal-overlay="light"
             className="absolute inset-0 bg-white bg-opacity-60 backdrop-blur-sm"
             onClick={() => setSelected(null)}
           />
@@ -75,16 +80,23 @@ export default function Projects() {
               <div className="flex flex-col gap-4 px-8 w-full">
                   <div className="flex gap-6 w-full px-2">
                     {/* Left big panel (with blue border highlight) */}
-                    <img
-                      src={CrossyImg}
-                      alt={`${projectData.title} preview`}
-                      className="flex-1 rounded-sm h-full min-h-[360px] object-cover border-4 border-[#0096ff]"
-                      style={{ objectPosition: "center 30%" }}
-                    />
+                    <div className="flex-1 bg-[#e6e6e6] rounded-sm h-full min-h-[360px]">
+                        <a href={projectData.url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+                          <img className="w-full h-[360px] object-cover rounded-sm bg-[#e6e6e6]" src={CrossyComputer} alt="Project Crossy Clone" />
+                        </a>
+                    </div>
                     {/* Center panel */}
-                    <div className="flex-1 bg-[#e6e6e6] rounded-sm h-full min-h-[360px]"></div>
+                    <div className="flex-1 bg-[#e6e6e6] rounded-sm h-full min-h-[360px]">
+                        <a href={projectData.url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+                          <img className="w-full h-[360px] object-cover rounded-sm bg-[#e6e6e6]" src={CrossyPhone} alt="Project Crossy Clone" />
+                        </a>
+                    </div>
                     {/* Right skinny panel */}
-                    <div className="w-[120px] bg-[#e6e6e6] rounded-sm h-full min-h-[360px]"></div>
+                    <div className="w-[120px] bg-[#e6e6e6] rounded-sm h-full min-h-[360px]">
+                        <a href={projectData.url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+                          <img className="w-full h-[360px] object-cover rounded-sm bg-[#e6e6e6]" src={CrossyComputer2} alt="Project Crossy Clone"  />
+                        </a>
+                    </div>
                   </div>
                   <div className="text-left mt-4 mb-6 ml-2">
                     <h3 className="font-helvetica-compressed text-2xl text-[#f5f5f5] font-extrabold uppercase tracking-wide mb-2">{selected.title}</h3>
@@ -94,8 +106,8 @@ export default function Projects() {
             </div>
 
           </div>
-        </div>
-      )}
+        </div>, document.body)
+      }
     </>
   );
 }

@@ -10,10 +10,14 @@ export default function Showcase() {
       </div>
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
+     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center relative z-10">
         <Projects />
-        <Projects />
-        <Projects />
+        <div className="transform translate-y-10 md:translate-y-16">
+          <Projects />
+        </div>
+        <div className="transform translate-y-10 md:translate-y-16">
+          <Projects />
+        </div>
         <Projects />
       </div>
 
