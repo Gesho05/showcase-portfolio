@@ -1,29 +1,74 @@
 import React from "react";
-import Projects from "./Projects"; // we'll reuse your card component
-import Projects2 from "./Projects2";
+import ProjectCard from "./ProjectCard";
+import CrossyImg from "../assets/images/Crossy.png";
+import CrossyComputer from "../assets/images/computer-crossy.png";
+import CrossyComputer2 from "../assets/images/computer-crossy2.png";
+import CrossyPhone from "../assets/images/phone-crossy.png";
+import OBCover from "../assets/images/OB-cover.png";
+import OBComputer from "../assets/images/OB-computer.png";
+import PortfolioCover from "../assets/images/portfolio-cover.png";
+import PortfolioComputer from "../assets/images/portfolio-computer.png";
+import Texture from "../assets/images/texture.jpg";
+import OBTablet from "../assets/images/OB-tablet.png";
+import OBWeb from "../assets/images/OB-web.png";
 
 export default function Showcase() {
   return (
-    <section className="bg-[#f5f5f5] text-black pt-10 pb-20 px-10">
+    <section className="relative text-black pt-10 pb-20 px-10 overflow-hidden">
+      {/* White base + texture overlay */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute inset-0 bg-white" />
+        <img src={Texture} alt="texture" className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-multiply" />
+      </div>
       {/* Description */}
-      <div className="max-w-2xl mx-auto text-center text-sm mb-16 leading-relaxed uppercase tracking-wider">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      <div className="relative z-10 max-w-2xl mx-auto text-center text-sm mb-16 leading-relaxed uppercase tracking-wider">
+        My name is Gberiel Marinski and I am studying to become a web developer. Designing is my passion and here you can see some of my work.
       </div>
 
       {/* Projects Grid */}
-     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center relative z-10">
-        <Projects />
-        <div className="transform translate-y-10 md:translate-y-16">
-          <Projects />
-        </div>
-        <div className="transform translate-y-10 md:translate-y-16">
-          <Projects2 />
-        </div>
-        <Projects2 />
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center relative z-10">
+          <ProjectCard
+            title="CROSSY ROAD CLONE"
+            description={'A CLONE OF THE POPULAR MOBILE GAME "CROSSY ROAD", BUILT AS A WEB APPLICATION USING THREE.JS'}
+            thumbnail={CrossyImg}
+            modalImages={[CrossyComputer, CrossyPhone, CrossyComputer2]}
+            url={'https://crossy-road-clone-steel.vercel.app'}
+          />
+
+          <div className="transform translate-y-6 md:translate-y-10">
+            <ProjectCard
+              title="CROSSY ROAD CLONE"
+              description={'A CLONE OF THE POPULAR MOBILE GAME "CROSSY ROAD", BUILT AS A WEB APPLICATION USING THREE.JS'}
+              bigDescription={'A clone of the popular mobile game "Crossy Road", built as a web application using Three.js. The game features 3D graphics, smooth animations, and engaging gameplay that captures the essence of the original game.'}
+              thumbnail={CrossyImg}
+              modalImages={[CrossyComputer, CrossyPhone, CrossyComputer2]}
+              url={'https://crossy-road-clone-steel.vercel.app'}
+            />
+          </div>
+
+          <div className="transform translate-y-6 md:translate-y-10">
+            <ProjectCard
+              title="ARTIST PROJECT"
+              description={'A PROTOTYPE WEBSITE CREATED FOR THE ARTIST OWEBN BRTYCE together with his branding'}
+              bigDescription={'Me and my group created a branding profile of the artist Owen Bryce (website, logo and posters). I worked mostly on designing the website and posters, and also i participated in the photoshoot we performed for the client. The website is a prototype and not live.'}
+              thumbnail={OBCover}
+              modalImages={[OBComputer, OBWeb, OBTablet]}
+              url={'https://www.figma.com/proto/en1JVhSd6vK2nCbIY5OB8w/PRJ1-Mood-Boards?page-id=194%3A4&node-id=596-203&viewport=195%2C-54%2C0.06&t=SyG46jR3QKZATXqH-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1815%3A78'}
+            />
+          </div>
+
+          <ProjectCard
+            title="PORTFOLIO WEBSITE"
+            description={'A PERSONAL PORTFOLIO WEBSITE TO SHOWCASE MY PROJECTS AND SKILLS FOR UNIVERCITY'}
+            bigDescription={'A personal portfolio website built to showcase my projects, skills, and experiences as a web developer. The site features a clean, modern design and is fully responsive across all devices.'}
+            thumbnail={PortfolioCover}
+            modalImages={[PortfolioComputer, CrossyPhone, CrossyComputer2]}
+            url={'https://i553540.hera.fontysict.net/index.html'}
+          />
       </div>
 
       {/* Footer Title */}
-      <div className="justify-center items-center flex mt-20">
+      <div className="relative z-10 justify-center items-center flex mt-20">
         <svg xmlns="http://www.w3.org/2000/svg" width="1042" height="153" viewBox="0 0 1042 153" fill="none">
 <path d="M0.0898438 4.54297H64.6406C77.401 4.54297 87.6875 8.15625 95.5 15.3828C103.312 22.5443 107.219 32.6354 107.219 45.6562C107.219 56.8542 103.736 66.6198 96.7695 74.9531C89.8034 83.2214 79.0938 87.3555 64.6406 87.3555H19.5234V148H0.0898438V4.54297ZM87.5898 45.7539C87.5898 35.207 83.6836 28.0456 75.8711 24.2695C71.5742 22.2513 65.6823 21.2422 58.1953 21.2422H19.5234V70.9492H58.1953C66.9193 70.9492 73.9831 69.0938 79.3867 65.3828C84.8555 61.6719 87.5898 55.1289 87.5898 45.7539ZM188.332 70.2656C197.447 70.2656 204.641 68.4427 209.914 64.7969C215.253 61.151 217.922 54.5755 217.922 45.0703C217.922 34.849 214.211 27.8828 206.789 24.1719C202.818 22.2188 197.512 21.2422 190.871 21.2422H143.41V70.2656H188.332ZM123.977 4.54297H190.383C201.32 4.54297 210.337 6.13802 217.434 9.32812C230.91 15.4479 237.648 26.7435 237.648 43.2148C237.648 51.8086 235.858 58.8398 232.277 64.3086C228.762 69.7773 223.814 74.1719 217.434 77.4922C223.033 79.7708 227.232 82.7656 230.031 86.4766C232.896 90.1875 234.491 96.2096 234.816 104.543L235.5 123.781C235.695 129.25 236.151 133.319 236.867 135.988C238.039 140.546 240.122 143.475 243.117 144.777V148H219.289C218.638 146.763 218.117 145.168 217.727 143.215C217.336 141.262 217.01 137.486 216.75 131.887L215.578 107.961C215.122 98.5859 211.639 92.3034 205.129 89.1133C201.418 87.3555 195.591 86.4766 187.648 86.4766H143.41V148H123.977V4.54297ZM391.258 56.536C391.258 106.182 347.998 152.532 306.798 152.532C278.782 152.532 259.418 130.49 259.418 99.384C259.418 51.592 302.06 2.76999 344.29 2.76999C370.246 2.76999 391.258 22.752 391.258 56.536ZM373.748 47.884C373.748 20.28 358.916 7.92 342.848 7.92C324.926 7.92 306.18 22.958 295.262 42.322C280.842 67.454 277.958 96.294 277.958 105.77C277.958 130.284 289.494 147.176 308.24 147.176C323.69 147.176 342.024 135.022 355.414 112.156C366.332 93.41 373.748 66.012 373.748 47.884ZM486.914 105.227C486.914 117.336 485.124 126.743 481.543 133.449C474.902 145.689 462.272 151.809 443.652 151.809C432.91 151.809 423.731 148.911 416.113 143.117C408.496 137.258 404.688 126.874 404.688 111.965V101.711H422.949V111.965C422.949 119.777 424.675 125.669 428.125 129.641C431.641 133.547 437.077 135.5 444.434 135.5C454.785 135.5 461.556 131.952 464.746 124.855C466.699 120.493 467.676 112.258 467.676 100.148V4.54297H486.914V105.227ZM522.359 4.54297H626.949V22.1211H541.305V65.6758H620.504V82.2773H541.305V130.91H628.414V148H522.359V4.54297ZM718.352 0.636719C736.516 0.636719 750.611 5.42188 760.637 14.9922C770.663 24.5625 776.229 35.4349 777.336 47.6094H758.391C756.242 38.3646 751.945 31.0404 745.5 25.6367C739.12 20.2331 730.135 17.5312 718.547 17.5312C704.419 17.5312 692.994 22.5117 684.27 32.4727C675.611 42.3685 671.281 57.5703 671.281 78.0781C671.281 94.875 675.188 108.514 683 118.996C690.878 129.413 702.596 134.621 718.156 134.621C732.479 134.621 743.384 129.12 750.871 118.117C754.843 112.323 757.805 104.706 759.758 95.2656H778.703C777.01 110.37 771.412 123.033 761.906 133.254C750.513 145.559 735.148 151.711 715.813 151.711C699.146 151.711 685.148 146.665 673.82 136.574C658.912 123.228 651.457 102.622 651.457 74.7578C651.457 53.599 657.056 36.2487 668.254 22.707C680.363 7.99349 697.063 0.636719 718.352 0.636719ZM910.828 4.54297V21.6328H862.488V148H842.762V21.6328H794.422V4.54297H910.828ZM945.395 101.711C945.85 109.849 947.771 116.457 951.156 121.535C957.602 131.04 968.962 135.793 985.238 135.793C992.53 135.793 999.171 134.751 1005.16 132.668C1016.75 128.632 1022.54 121.405 1022.54 110.988C1022.54 103.176 1020.1 97.6094 1015.22 94.2891C1010.27 91.0339 1002.52 88.2018 991.977 85.793L972.543 81.3984C959.848 78.5339 950.863 75.3763 945.59 71.9258C936.475 65.9362 931.918 56.9844 931.918 45.0703C931.918 32.1797 936.378 21.6003 945.297 13.332C954.216 5.0638 966.846 0.929688 983.188 0.929688C998.227 0.929688 1010.99 4.57552 1021.47 11.8672C1032.02 19.0938 1037.29 30.6823 1037.29 46.6328H1019.03C1018.05 38.9505 1015.97 33.0586 1012.78 28.957C1006.85 21.4701 996.794 17.7266 982.602 17.7266C971.143 17.7266 962.908 20.1354 957.895 24.9531C952.882 29.7708 950.375 35.3698 950.375 41.75C950.375 48.7812 953.305 53.9245 959.164 57.1797C963.005 59.263 971.697 61.8672 985.238 64.9922L1005.36 69.582C1015.06 71.7956 1022.54 74.8229 1027.82 78.6641C1036.93 85.3698 1041.49 95.1029 1041.49 107.863C1041.49 123.749 1035.69 135.109 1024.11 141.945C1012.58 148.781 999.171 152.199 983.871 152.199C966.033 152.199 952.068 147.642 941.977 138.527C931.885 129.478 926.938 117.206 927.133 101.711H945.395Z" fill="#0E0E0E"/>
 </svg>

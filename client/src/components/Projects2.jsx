@@ -62,9 +62,11 @@ export default function Projects2() {
   }, [selected]);
 
   const projectData = {
-    title: "OWEN BRYCE PROJECT",
+    title: "ARTIST PROJECT",
     description:
-      'A PROTOTYPE WEBSITE CREATED FOR THE ARTIST OWEBN BRTYCE',
+      'A PROTOTYPE WEBSITE CREATED FOR THE ARTIST OWEBN BRTYCE together with his branding',
+    bigDescription:
+      'Me and my group created a branding profile of the artist Owen Bryce (website, logo and posters). I worked mostly on designing the website and posters, and also i participated in the photoshoot we performed for the client. The website is a prototype and not live.',
     image: CrossyImg,
     // set this to the live/demo URL for the project
     url: 'https://crossy-road-clone-steel.vercel.app'
@@ -122,7 +124,7 @@ export default function Projects2() {
             </div>
 
             {/* Main white/light area containing three panels */}
-            <div className="bg-[#131313] rounded-b-3xl pt-6 pb-0 h-[calc(100%-92px)] flex items-start">
+            <div className="bg-[#131313] rounded-b-3xl pt-6 pb-0 h-[calc(100%-72px)] flex items-start">
               <div className="flex flex-col gap-4 px-8 w-full">
                   <div className="flex gap-6 w-full px-2">
                     {/* Left big panel (with blue border highlight) */}
@@ -138,7 +140,7 @@ export default function Projects2() {
                         </a>
                     </div>
                     {/* Right skinny panel */}
-                    <div className="w-[120px] bg-[#e6e6e6] rounded-sm h-full min-h-[360px]">
+                    <div className="w-[120px] bg-[#e6e6e6] rounded-sm h-full min-h-[260px]">
                         <a href={projectData.url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
                           <img className="w-full h-[360px] object-cover rounded-sm bg-[#e6e6e6]" src={CrossyComputer2} alt="Project Crossy Clone"  />
                         </a>
@@ -146,7 +148,7 @@ export default function Projects2() {
                   </div>
                   <div className="text-left mt-4 mb-6 ml-2">
                     <h3 className="font-helvetica-compressed text-2xl text-[#f5f5f5] font-extrabold uppercase tracking-wide mb-2">{selected.title}</h3>
-                    <p className="font-helvetica-compressed text-sm text-gray-300 uppercase leading-tight max-w-full">{selected.description}</p>
+                    <p className="font-helvetica-compressed text-sm text-gray-300 uppercase leading-tight max-w-full">{selected.bigDescription}</p>
                   </div>
               </div>
             </div>
