@@ -48,3 +48,14 @@ body {
   font-family: 'Helvetica Compressed', system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
+html,
+body {
+  min-height: 100%;
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+}
+
+#root {
+  min-height: 100%;
+}
+
