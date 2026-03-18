@@ -8,7 +8,9 @@ export default function ProjectCard({
   thumbnail,
   modalImages = [], // array of image URLs for left/center/right panels
   url = '#',
-  className = ''
+  className = '',
+  variant = 'default',
+  overlayTextColor = 'black'
 }) {
   const [selected, setSelected] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -108,22 +110,50 @@ export default function ProjectCard({
     scrollToIndex(prev);
   };
 
+  const isOverlayVariant = variant === 'overlay';
+  const overlayTextClass = overlayTextColor === 'white' ? 'text-white' : 'text-black';
+
+  const cardClassName = isOverlayVariant
+    ? `w-[clamp(16rem,27vw,25rem)] aspect-square bg-transparent rounded-[2.5rem] overflow-hidden border-[0.2rem] border-black cursor-pointer transform transition-all duration-700 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'} ${className}`
+    : `w-72 font-helvetica-compressed bg-[#131313] text-[#f5f5f5] rounded-2xl overflow-hidden border border-gray-800 shadow-lg flex flex-col p-2 cursor-pointer transform transition-all duration-700 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'} ${className}`;
+
   return (
     <>
       <div
         ref={cardRef}
         onClick={() => setSelected(true)}
-        className={`w-72 font-helvetica-compressed bg-[#131313] text-[#f5f5f5] rounded-2xl overflow-hidden border border-gray-800 shadow-lg flex flex-col p-2 cursor-pointer transform transition-all duration-700 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'} ${className}`}
+        className={cardClassName}
         role="button"
         tabIndex={0}
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setSelected(true); }}
       >
-        <img className="rounded-xl h-[230px] w-full object-cover" src={thumbnail} alt={title} style={{ objectPosition: 'center 65%' }} />
-        <div className="p-4 flex flex-col justify-between flex-grow">
-          <h2 className="font-helvetica-compressed text-3xl text-left mb-20 font-extrabold tracking-wide">{title}</h2>
-          <div className="border-b border-gray-600 my-2" />
-          <p className="text-left leading-tight uppercase text-md font-helvetica-compressed">{description}</p>
-        </div>
+        {isOverlayVariant ? (
+          <div className="relative h-full w-full overflow-hidden">
+            <img
+              className="h-full w-full object-cover"
+              src={thumbnail}
+              alt={title}
+              style={{ objectPosition: 'center 62%' }}
+            />
+            <div className={`absolute top-0 left-0 p-[clamp(0.65rem,1.2vw,1rem)] ${overlayTextClass} text-left flex flex-col items-start`}>
+              <h2 className="font-helvetica-compressed text-[clamp(1.1rem,1.6vw,1.75rem)] leading-none tracking-wide uppercase mb-1 text-left w-full">
+                {title}
+              </h2>
+              <p className="font-helvetica-compressed uppercase text-[clamp(0.62rem,0.82vw,0.9rem)] leading-tight opacity-95 text-left w-full">
+                WEB DESIGNER
+              </p>
+            </div>
+          </div>
+        ) : (
+          <>
+            <img className="rounded-xl h-[230px] w-full object-cover" src={thumbnail} alt={title} style={{ objectPosition: 'center 65%' }} />
+            <div className="p-4 flex flex-col justify-between flex-grow">
+              <h2 className="font-helvetica-compressed text-3xl text-left mb-20 font-extrabold tracking-wide">{title}</h2>
+              <div className="border-b border-gray-600 my-2" />
+              <p className="text-left leading-tight uppercase text-md font-helvetica-compressed">{description}</p>
+            </div>
+          </>
+        )}
       </div>
   {selected && createPortal(
   <div className="fixed inset-0 z-50 flex items-center justify-center">

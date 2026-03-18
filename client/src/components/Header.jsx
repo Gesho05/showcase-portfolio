@@ -56,42 +56,59 @@ export default function Header() {
     const showcaseColor = "#131313"; // dark
     const defaultColor = "#F5F5F5"; // light
 
-    const sections = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter(Boolean);
+    let observer = null;
+    let retryTimer = null;
+    let isDisposed = false;
+    const visibilityRatios = {
+      "section-header": 0,
+      "section-showcase": 0,
+      "section-footer": 0,
+    };
 
-    if (sections.length === 0) return;
+    const setupObserver = () => {
+      const sections = sectionIds
+        .map((id) => document.getElementById(id))
+        .filter(Boolean);
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // Calculate blend based on how much Showcase section is visible
-        const showcaseEntry = entries.find((e) => e.target.id === "section-showcase");
-        
-        if (showcaseEntry) {
-          const currentRatio = showcaseEntry.intersectionRatio;
-          
-          // Detect direction: decreasing = leaving Showcase (fast), increasing = entering (slow)
+      if (sections.length < sectionIds.length) {
+        if (!isDisposed) {
+          retryTimer = window.setTimeout(setupObserver, 100);
+        }
+        return;
+      }
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            visibilityRatios[entry.target.id] = entry.intersectionRatio;
+          });
+
+          const currentRatio = visibilityRatios["section-showcase"] || 0;
+
           if (currentRatio < previousRatioRef.current) {
-            // Leaving Showcase - fast transition back to light
             setColorTransitionDuration(300);
           } else if (currentRatio > previousRatioRef.current) {
-            // Entering Showcase - smooth transition to dark
             setColorTransitionDuration(700);
           }
-          
+
           previousRatioRef.current = currentRatio;
-          
-          // Smooth blend: 0 = fully light, 1 = fully dark
+
           const blendedColor = lerpColor(defaultColor, showcaseColor, currentRatio);
           setHeaderForegroundColor(blendedColor);
-        }
-      },
-      { threshold: Array.from({ length: 101 }, (_, i) => i / 100) } // 101 threshold points for smooth transitions
-    );
+        },
+        { threshold: Array.from({ length: 101 }, (_, i) => i / 100) }
+      );
 
-    sections.forEach((section) => observer.observe(section));
+      sections.forEach((section) => observer.observe(section));
+    };
 
-    return () => observer.disconnect();
+    setupObserver();
+
+    return () => {
+      isDisposed = true;
+      if (retryTimer) window.clearTimeout(retryTimer);
+      if (observer) observer.disconnect();
+    };
   }, []);
 
     return (
