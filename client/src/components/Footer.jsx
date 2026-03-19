@@ -1,8 +1,37 @@
 import React from "react";
 
 export default function Footer() {
+  const handleBackToTop = () => {
+    const headerSection = document.getElementById("section-header");
+    if (headerSection) {
+      headerSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <section id="section-footer" className="bg-[#131313] text-black h-screen min-h-[100dvh] snap-start snap-always overflow-hidden relative">
+      {/* Center back-to-top glass button */}
+      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center">
+        <button
+          type="button"
+          onClick={handleBackToTop}
+          className="group w-[4.6rem] h-[4.6rem] rounded-2xl bg-white/[0.06] border border-white/[0.12] backdrop-blur-sm flex items-center justify-center transition-all duration-250 hover:scale-[1.04] hover:shadow-[0_8px_24px_rgba(0,0,0,0.32)]"
+          aria-label="Back to top"
+        >
+          <span className="text-[2.05rem] leading-none text-white/95 transition-colors duration-200 group-hover:text-white/60 select-none">
+            ↑
+          </span>
+        </button>
+        <div
+          className="mt-2.5 text-white text-[0.8rem] uppercase tracking-[0.04em]"
+          style={{ fontFamily: "'SpaceMonoBold', sans-serif" }}
+        >
+          BACK TO TOP
+        </div>
+      </div>
+
       {/* SVG: positioned absolutely, centered, a few pixels above links */}
       <div className="absolute inset-x-0 bottom-16 flex justify-center items-center px-[clamp(3rem, 8vw, 5rem)]">
         <svg

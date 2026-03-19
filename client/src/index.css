@@ -59,3 +59,10 @@ body {
   min-height: 100%;
 }
 
+html.custom-cursor-enabled,
+html.custom-cursor-enabled *,
+body.custom-cursor-enabled,
+body.custom-cursor-enabled * {
+  cursor: none !important;
+}
+

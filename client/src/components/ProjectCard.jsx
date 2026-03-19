@@ -112,6 +112,10 @@ export default function ProjectCard({
 
   const isOverlayVariant = variant === 'overlay';
   const overlayTextClass = overlayTextColor === 'white' ? 'text-white' : 'text-black';
+  const secondaryBadgeClass =
+    overlayTextColor === 'white'
+      ? 'bg-white/20 backdrop-blur-sm'
+      : 'bg-white/35 backdrop-blur-sm';
 
   const cardClassName = isOverlayVariant
     ? `w-[clamp(16rem,27vw,25rem)] aspect-square bg-transparent rounded-[2.5rem] overflow-hidden border-[0.2rem] border-black cursor-pointer transform transition-all duration-700 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'} ${className}`
@@ -123,6 +127,7 @@ export default function ProjectCard({
         ref={cardRef}
         onClick={() => setSelected(true)}
         className={cardClassName}
+        data-cursor-project={isOverlayVariant ? 'true' : undefined}
         role="button"
         tabIndex={0}
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setSelected(true); }}
@@ -139,7 +144,7 @@ export default function ProjectCard({
               <h2 className="font-helvetica-compressed text-[clamp(1.1rem,1.6vw,1.75rem)] leading-none tracking-wide uppercase mb-1 text-left w-full">
                 {title}
               </h2>
-              <p className="font-helvetica-compressed uppercase text-[clamp(0.62rem,0.82vw,0.9rem)] leading-tight opacity-95 text-left w-full">
+              <p className={`font-helvetica-compressed uppercase text-[clamp(0.62rem,0.82vw,0.9rem)] leading-tight opacity-95 text-left inline-flex items-center px-[clamp(0.4rem,0.75vw,0.62rem)] py-[clamp(0.12rem,0.24vw,0.2rem)] rounded-[0.42rem] ${secondaryBadgeClass}`}>
                 WEB DESIGNER
               </p>
             </div>

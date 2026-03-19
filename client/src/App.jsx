@@ -1,10 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import Header from './components/Header'
 import Showcase from './components/Showcase'
+import About from './components/About'
 import Footer from './components/Footer'
 import './App.css'
 
 function App() {
+  const location = useLocation()
+  const [displayLocation, setDisplayLocation] = useState(location)
+  const [routeOpacity, setRouteOpacity] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
   const [isExiting, setIsExiting] = useState(false)
   const [showContent, setShowContent] = useState(false)
@@ -12,6 +17,14 @@ function App() {
   const [logoLifted, setLogoLifted] = useState(false)
   const [shouldFlyLogo, setShouldFlyLogo] = useState(true)
   const [loaderLogoMarkup, setLoaderLogoMarkup] = useState('')
+  const [headerGhostMarkup, setHeaderGhostMarkup] = useState('')
+  const [showHeaderGhost, setShowHeaderGhost] = useState(false)
+  const [customCursorEnabled, setCustomCursorEnabled] = useState(false)
+  const [cursorProjectMode, setCursorProjectMode] = useState(false)
+  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false)
+  const cursorRef = useRef(null)
+  const cursorProjectModeRef = useRef(false)
+  const effectiveCustomCursorEnabled = customCursorEnabled && !isProjectModalOpen
 
   useEffect(() => {
     if (!isLoading) return
@@ -40,7 +53,7 @@ function App() {
 
   useEffect(() => {
     setLogoLifted(false)
-    const inHeaderSection = window.scrollY <= window.innerHeight * 0.35
+    const inHeaderSection = location.pathname === '/' && window.scrollY <= window.innerHeight * 0.35
     setShouldFlyLogo(inHeaderSection)
 
     let current = 0
@@ -76,13 +89,118 @@ function App() {
       window.clearTimeout(startExitTimer)
       window.clearTimeout(removeLoaderTimer)
     }
-  }, [])
+  }, [location.pathname])
+
+  useEffect(() => {
+    if (location.pathname === displayLocation.pathname) return
+
+    const persistentHeaderNode = document.querySelector('[data-persistent-header="true"]')
+    if (persistentHeaderNode) {
+      setHeaderGhostMarkup(persistentHeaderNode.outerHTML)
+      setShowHeaderGhost(true)
+    } else {
+      setHeaderGhostMarkup('')
+      setShowHeaderGhost(false)
+    }
+
+    setRouteOpacity(0)
+
+    const swapTimer = window.setTimeout(() => {
+      setDisplayLocation(location)
+      requestAnimationFrame(() => {
+        setRouteOpacity(1)
+      })
+    }, 360)
+
+    const hideGhostTimer = window.setTimeout(() => {
+      setShowHeaderGhost(false)
+      setHeaderGhostMarkup('')
+    }, 520)
+
+    return () => {
+      window.clearTimeout(swapTimer)
+      window.clearTimeout(hideGhostTimer)
+    }
+  }, [location, displayLocation.pathname])
 
   useEffect(() => {
     if (!isLoading) {
       setShowContent(true)
     }
   }, [isLoading])
+
+  useEffect(() => {
+    const prefersFinePointer = window.matchMedia('(pointer: fine)').matches
+    if (!prefersFinePointer) {
+      setCustomCursorEnabled(false)
+      return
+    }
+
+    setCustomCursorEnabled(true)
+
+    const handleMove = (event) => {
+      const cursor = cursorRef.current
+      if (!cursor) return
+      cursor.style.left = `${event.clientX}px`
+      cursor.style.top = `${event.clientY}px`
+      cursor.style.opacity = '1'
+
+      const overProjectCard = !!event.target?.closest?.('[data-cursor-project="true"]')
+      if (overProjectCard !== cursorProjectModeRef.current) {
+        cursorProjectModeRef.current = overProjectCard
+        setCursorProjectMode(overProjectCard)
+      }
+    }
+
+    const hideCursor = () => {
+      const cursor = cursorRef.current
+      if (!cursor) return
+      cursor.style.opacity = '0'
+    }
+
+    window.addEventListener('mousemove', handleMove)
+    window.addEventListener('mouseenter', handleMove)
+    window.addEventListener('mouseleave', hideCursor)
+
+    return () => {
+      window.removeEventListener('mousemove', handleMove)
+      window.removeEventListener('mouseenter', handleMove)
+      window.removeEventListener('mouseleave', hideCursor)
+    }
+  }, [])
+
+  useEffect(() => {
+    const syncModalState = () => {
+      const modalNode = document.querySelector('[data-modal-overlay="light"]')
+      const isOpen = Boolean(modalNode)
+      setIsProjectModalOpen(isOpen)
+      if (isOpen) {
+        cursorProjectModeRef.current = false
+        setCursorProjectMode(false)
+      }
+    }
+
+    syncModalState()
+    const observer = new MutationObserver(syncModalState)
+    observer.observe(document.body, { childList: true, subtree: true })
+
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (effectiveCustomCursorEnabled) {
+      document.body.classList.add('custom-cursor-enabled')
+      document.documentElement.classList.add('custom-cursor-enabled')
+    } else {
+      document.body.classList.remove('custom-cursor-enabled')
+      document.documentElement.classList.remove('custom-cursor-enabled')
+    }
+
+    return () => {
+      document.body.classList.remove('custom-cursor-enabled')
+      document.documentElement.classList.remove('custom-cursor-enabled')
+    }
+  }, [effectiveCustomCursorEnabled])
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow
@@ -139,10 +257,53 @@ function App() {
       )}
 
       <div className={`transition-opacity duration-900 ${showContent ? 'opacity-100' : 'opacity-0'}`}>
-        <Header />
-        <Showcase />
-        <Footer />
+        <div className="transition-opacity duration-[360ms] ease-in-out" style={{ opacity: routeOpacity }}>
+          <Routes location={displayLocation} key={displayLocation.pathname}>
+            <Route
+              path="/"
+              element={(
+                <>
+                  <Header />
+                  <Showcase />
+                  <Footer />
+                </>
+              )}
+            />
+            <Route path="/about" element={<About />} />
+          </Routes>
+        </div>
       </div>
+
+      {showHeaderGhost && headerGhostMarkup && (
+        <div
+          className="fixed inset-0 z-[140] pointer-events-none transition-opacity duration-150 ease-out"
+          style={{ opacity: routeOpacity === 0 ? 1 : 0 }}
+          aria-hidden="true"
+        >
+          <div className="pointer-events-none" dangerouslySetInnerHTML={{ __html: headerGhostMarkup }} />
+        </div>
+      )}
+
+      {effectiveCustomCursorEnabled && (
+        <div
+          ref={cursorRef}
+          className={`fixed z-[500] pointer-events-none opacity-0 transition-[width,height,border-radius,background-color,box-shadow,opacity] duration-200 ease-out flex items-center justify-center ${
+            cursorProjectMode
+              ? 'w-[7.35rem] h-[2.3rem] rounded-[0.58rem] bg-white border border-white/20 mix-blend-difference shadow-[0_8px_24px_rgba(0,0,0,0.35)] px-[0.78rem]'
+              : 'w-4 h-4 rounded-[0.3rem] bg-white mix-blend-difference border-0'
+          }`}
+          style={{ transform: 'translate(-50%, -50%)' }}
+        >
+          {cursorProjectMode && (
+            <span
+              className="uppercase text-black text-[0.82rem] tracking-[0.01em] leading-none whitespace-nowrap"
+              style={{ fontFamily: "'SpaceMonoBold', sans-serif" }}
+            >
+              SEE PROJECT ↗
+            </span>
+          )}
+        </div>
+      )}
     </>
   )
 }

@@ -1,7 +1,9 @@
 import React from 'react';
 import { useEffect, useState, useRef } from "react";
+import { useNavigate } from 'react-router-dom';
 
 export default function Header() {
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [scrolling, setScrolling] = useState(false);
   const [headerForegroundColor, setHeaderForegroundColor] = useState("#F5F5F5");
@@ -14,6 +16,16 @@ export default function Header() {
   // Change these values below to adjust timing/position.
   const MINI_NAV_THRESHOLD = 250; // px — increase to show the mini-nav later
   const MINI_NAV_TOP = 20; // px — smaller = closer to very top; increase to push it further down
+
+  const handleAboutClick = () => {
+    if (!scrolled) {
+      setScrolled(true);
+      setScrolling(true);
+      window.setTimeout(() => navigate('/about'), 260);
+      return;
+    }
+    navigate('/about');
+  };
 
   // Helper function to interpolate between two hex colors
   const lerpColor = (color1, color2, t) => {
@@ -120,6 +132,7 @@ export default function Header() {
       }`}
     >
          <div
+        data-persistent-header="true"
         className={`fixed transition-all duration-500 ease-in-out ${
           scrolled
             ? "left-8 top-1 w-[18.5rem] -translate-x-6 translate-y-2 scale-100 origin-top-left"
@@ -138,13 +151,13 @@ export default function Header() {
             style={{ top: MINI_NAV_TOP, color: headerForegroundColor, fontFamily: "'SpaceMonoBold', sans-serif", transition: `color ${colorTransitionDuration}ms ease-out, opacity 300ms ease-in-out, transform 300ms ease-in-out` }}
             aria-hidden={!scrolled}
           >
-            <button className="uppercase tracking-wider font-spacemonobold" style={{ fontFamily: "'SpaceMonoBold', sans-serif" }}>ABOUT</button>
+            <button onClick={handleAboutClick} className="uppercase tracking-wider font-spacemonobold" style={{ fontFamily: "'SpaceMonoBold', sans-serif" }}>ABOUT</button>
             <button className="uppercase tracking-wider font-spacemonobold" style={{ fontFamily: "'SpaceMonoBold', sans-serif" }}>CONTACT</button>
           </div>
 
           {/* center big text: hide on any scroll start, shown otherwise */}
           <div className={`absolute inset-x-0 top-1/2 -translate-y-1/2 font-spacemonobold flex w-full max-w-[1200px] mx-auto px-[clamp(1rem,6vw,5rem)] text-sm justify-between items-center gap-6 transition-all duration-300 ease-in-out transform ${scrolling ? 'opacity-0 -translate-y-[calc(50%+1.5rem)] pointer-events-none' : 'opacity-100 -translate-y-1/2'}`} style={{ color: headerForegroundColor, fontFamily: "'SpaceMonoBold', sans-serif", transition: `color ${colorTransitionDuration}ms ease-out, opacity 300ms ease-in-out, transform 300ms ease-in-out` }}>
-            <div className=''>ABOUT</div>
+            <button onClick={handleAboutClick} className='uppercase'>ABOUT</button>
             <div className=''>WEB DESIGNER, WEB DEVELOPER</div>
             <div className=''>CONTACT</div>
           </div>
