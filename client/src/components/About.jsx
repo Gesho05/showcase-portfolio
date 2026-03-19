@@ -6,8 +6,6 @@ export default function About() {
 
   return (
     <main className="bg-[#131313] text-[#f5f5f5] min-h-screen overflow-hidden relative px-[clamp(1.25rem,4vw,3rem)]">
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.08),transparent_45%),radial-gradient(circle_at_80%_75%,rgba(255,255,255,0.06),transparent_40%)]" />
-
       <div className="fixed top-0 left-0 right-0 z-40 pointer-events-none">
         <button
           data-persistent-header="true"
@@ -22,11 +20,14 @@ export default function About() {
         </button>
 
         <div
-          className="fixed right-6 top-5 flex items-center gap-12 text-sm uppercase tracking-[0.07em] text-[#f5f5f5]/90 pointer-events-auto"
+          className="fixed right-6 top-5 flex items-center gap-9 text-sm uppercase tracking-[0.07em] text-[#f5f5f5]/90 pointer-events-auto"
           style={{ fontFamily: "'SpaceMonoBold', sans-serif" }}
         >
           <button type="button" onClick={() => navigate('/about')} className="hover:text-[#f5f5f5] transition-colors">
             ABOUT
+          </button>
+          <button type="button" onClick={() => navigate('/')} className="hover:text-[#f5f5f5] transition-colors">
+            HOME
           </button>
           <a href="mailto:contact@example.com" className="hover:text-[#f5f5f5] transition-colors">
             CONTACT
@@ -34,20 +35,58 @@ export default function About() {
         </div>
       </div>
 
-      <div className="relative z-10 h-[calc(100vh-4.5rem)] w-full flex flex-col justify-center max-w-[1000px] mx-auto pt-10">
-        <div className="font-spacemonobold uppercase tracking-[0.12em] text-[clamp(0.72rem,1vw,0.9rem)] opacity-75 mb-4">
-          ABOUT ME
+      <div className="relative z-10 min-h-screen w-full max-w-[1400px] mx-auto pt-28 pb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(280px,0.95fr)_minmax(520px,1.45fr)] gap-6 h-[calc(100vh-8.8rem)] min-h-[620px]">
+          <section className="rounded-[1.9rem] border border-[#f5f5f5]/55 bg-[#f5f5f5]/[0.04] backdrop-blur-[1.5px] p-6 flex flex-col justify-between overflow-hidden">
+            <div>
+              <p className="font-spacemonobold uppercase tracking-[0.13em] text-[0.72rem] text-[#f5f5f5]/70">
+                Portrait Frame
+              </p>
+              <h2 className="mt-3 font-helvetica-compressed uppercase leading-[0.95] text-[clamp(2rem,4.7vw,4.3rem)]">
+                About Me
+              </h2>
+            </div>
+
+            <div className="w-full h-full mt-6 rounded-[1.35rem] border border-[#f5f5f5]/40 flex items-center justify-center bg-[#f5f5f5]/[0.03]">
+              <span className="font-spacemonobold uppercase tracking-[0.14em] text-[#f5f5f5]/50 text-[0.78rem]">Photo</span>
+            </div>
+          </section>
+
+          <section className="grid grid-cols-6 grid-rows-[1.2fr_1fr_auto] gap-5 h-full">
+            <article className="col-span-3 rounded-[1.5rem] border border-[#f5f5f5]/45 bg-[#f5f5f5]/[0.08] p-5">
+              <h3 className="font-spacemonobold uppercase tracking-[0.11em] text-[0.74rem] text-[#f5f5f5]/70 mb-3">Who I Am</h3>
+              <p className="font-spacemonobold uppercase tracking-[0.02em] leading-[1.55] text-[clamp(0.7rem,0.92vw,0.9rem)] text-[#f5f5f5]/92">
+                Web designer and developer focused on clear visual systems and strong digital storytelling.
+              </p>
+            </article>
+
+            <article className="col-span-3 rounded-[1.5rem] border border-[#f5f5f5]/45 bg-[#f5f5f5]/[0.08] p-5">
+              <h3 className="font-spacemonobold uppercase tracking-[0.11em] text-[0.74rem] text-[#f5f5f5]/70 mb-3">What I Build</h3>
+              <p className="font-spacemonobold uppercase tracking-[0.02em] leading-[1.55] text-[clamp(0.7rem,0.92vw,0.9rem)] text-[#f5f5f5]/92">
+                Modern, bold interfaces that feel intentional, fluid, and easy to navigate.
+              </p>
+            </article>
+
+            <div className="col-span-2 rounded-[1.4rem] border border-[#f5f5f5]/40 bg-[#f5f5f5]/[0.06]" />
+
+            <article className="col-span-2 rounded-[1.4rem] border border-[#f5f5f5]/40 bg-[#f5f5f5]/[0.06] p-4 flex flex-col justify-between">
+              <p className="font-spacemonobold uppercase tracking-[0.11em] text-[0.68rem] text-[#f5f5f5]/65">Based In</p>
+              <p className="font-spacemonobold uppercase text-[0.9rem] text-[#f5f5f5]/90">Paris / Remote</p>
+            </article>
+
+            <article className="col-span-2 rounded-[1.4rem] border border-[#f5f5f5]/40 bg-[#f5f5f5]/[0.06] p-4 flex flex-col justify-between">
+              <p className="font-spacemonobold uppercase tracking-[0.11em] text-[0.68rem] text-[#f5f5f5]/65">Focus</p>
+              <p className="font-spacemonobold uppercase text-[0.9rem] text-[#f5f5f5]/90">UX / Web Design</p>
+            </article>
+
+            <article className="col-span-6 rounded-[1.4rem] border border-[#f5f5f5]/45 bg-[#f5f5f5]/[0.1] px-5 py-4 min-h-[7.25rem] flex items-center justify-between gap-4">
+              <p className="font-spacemonobold uppercase tracking-[0.1em] text-[0.72rem] text-[#f5f5f5]/70">Currently Open For New Projects</p>
+              <a href="mailto:contact@example.com" className="font-spacemonobold uppercase tracking-[0.08em] text-[0.72rem] text-[#f5f5f5] hover:text-[#f5f5f5]/80 transition-colors">
+                Contact ↗
+              </a>
+            </article>
+          </section>
         </div>
-
-        <h2 className="font-helvetica-compressed uppercase leading-[0.95] text-[clamp(2.3rem,8vw,7.4rem)] max-w-[17ch]">
-          DESIGNING DIGITAL EXPERIENCES WITH PURPOSE
-        </h2>
-
-        <p className="mt-7 font-spacemonobold text-[clamp(0.78rem,1.1vw,1rem)] leading-relaxed max-w-[68ch] opacity-90 uppercase tracking-[0.02em]">
-          I am Gberiel Marinski, a web designer and developer focused on clean visual systems,
-          interaction, and strong storytelling through layout and motion. I build modern interfaces
-          that feel simple, bold, and intentional.
-        </p>
       </div>
     </main>
   );
