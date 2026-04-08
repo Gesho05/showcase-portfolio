@@ -1,11 +1,23 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import AboutBackground from "../assets/images/aboutbackground.png";
 
 export default function About() {
   const navigate = useNavigate();
+  const frameClip = 'inset(11% 60% 9% 4.5% round 2rem)';
+  const frameClipExpanded = 'inset(10.6% 59.6% 8.6% 4.1% round 2rem)';
 
   return (
     <main className="bg-[#131313] text-[#f5f5f5] min-h-screen overflow-hidden relative px-[clamp(1.25rem,4vw,3rem)]">
+      <img
+        src={AboutBackground}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ objectPosition: 'center center' }}
+      />
+      <div className="absolute inset-0 bg-[#131313]/25" />
+
       <div className="fixed top-0 left-0 right-0 z-40 pointer-events-none">
         <button
           data-persistent-header="true"
@@ -35,57 +47,70 @@ export default function About() {
         </div>
       </div>
 
-      <div className="relative z-10 min-h-screen w-full max-w-[1400px] mx-auto pt-28 pb-10">
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(280px,0.95fr)_minmax(520px,1.45fr)] gap-6 h-[calc(100vh-8.8rem)] min-h-[620px]">
-          <section className="rounded-[1.9rem] border border-[#f5f5f5]/55 bg-[#f5f5f5]/[0.04] backdrop-blur-[1.5px] p-6 flex flex-col justify-between overflow-hidden">
-            <div>
-              <p className="font-spacemonobold uppercase tracking-[0.13em] text-[0.72rem] text-[#f5f5f5]/70">
-                Portrait Frame
-              </p>
-              <h2 className="mt-3 font-helvetica-compressed uppercase leading-[0.95] text-[clamp(2rem,4.7vw,4.3rem)]">
-                About Me
-              </h2>
-            </div>
+      <div className="relative z-10 min-h-screen w-full max-w-[1400px] mx-auto pt-24 pb-8">
+        <div className="relative h-[calc(100vh-7.25rem)] min-h-[640px] rounded-[2rem] overflow-hidden">
+          <img
+            src={AboutBackground}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ objectPosition: 'center center' }}
+          />
 
-            <div className="w-full h-full mt-6 rounded-[1.35rem] border border-[#f5f5f5]/40 flex items-center justify-center bg-[#f5f5f5]/[0.03]">
-              <span className="font-spacemonobold uppercase tracking-[0.14em] text-[#f5f5f5]/50 text-[0.78rem]">Photo</span>
-            </div>
-          </section>
+          <img
+            src={AboutBackground}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover blur-[7px]"
+            style={{ objectPosition: 'center center' }}
+          />
 
-          <section className="grid grid-cols-6 grid-rows-[1.2fr_1fr_auto] gap-5 h-full">
-            <article className="col-span-3 rounded-[1.5rem] border border-[#f5f5f5]/45 bg-[#f5f5f5]/[0.08] p-5">
-              <h3 className="font-spacemonobold uppercase tracking-[0.11em] text-[0.74rem] text-[#f5f5f5]/70 mb-3">Who I Am</h3>
-              <p className="font-spacemonobold uppercase tracking-[0.02em] leading-[1.55] text-[clamp(0.7rem,0.92vw,0.9rem)] text-[#f5f5f5]/92">
-                Web designer and developer focused on clear visual systems and strong digital storytelling.
-              </p>
-            </article>
+          <img
+            src={AboutBackground}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ clipPath: frameClipExpanded, objectPosition: 'center center' }}
+          />
 
-            <article className="col-span-3 rounded-[1.5rem] border border-[#f5f5f5]/45 bg-[#f5f5f5]/[0.08] p-5">
-              <h3 className="font-spacemonobold uppercase tracking-[0.11em] text-[0.74rem] text-[#f5f5f5]/70 mb-3">What I Build</h3>
-              <p className="font-spacemonobold uppercase tracking-[0.02em] leading-[1.55] text-[clamp(0.7rem,0.92vw,0.9rem)] text-[#f5f5f5]/92">
-                Modern, bold interfaces that feel intentional, fluid, and easy to navigate.
-              </p>
-            </article>
+          <div className="absolute inset-0 bg-[#131313]/35" />
 
-            <div className="col-span-2 rounded-[1.4rem] border border-[#f5f5f5]/40 bg-[#f5f5f5]/[0.06]" />
+          <img
+            src={AboutBackground}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ clipPath: frameClip, objectPosition: 'center center' }}
+          />
 
-            <article className="col-span-2 rounded-[1.4rem] border border-[#f5f5f5]/40 bg-[#f5f5f5]/[0.06] p-4 flex flex-col justify-between">
-              <p className="font-spacemonobold uppercase tracking-[0.11em] text-[0.68rem] text-[#f5f5f5]/65">Based In</p>
-              <p className="font-spacemonobold uppercase text-[0.9rem] text-[#f5f5f5]/90">Paris / Remote</p>
-            </article>
+          <div className="relative h-full grid grid-cols-1 lg:grid-cols-[minmax(280px,0.95fr)_minmax(520px,1.45fr)] gap-6 p-[clamp(1.1rem,2vw,2rem)]">
+            <section className="rounded-[1.9rem] border border-[#f5f5f5]/70 bg-transparent flex flex-col justify-end overflow-hidden">
+              <div className="pb-7 px-6">
+                <span className="font-spacemonobold uppercase tracking-[0.14em] text-[#f5f5f5]/65 text-[0.78rem]">Photo</span>
+              </div>
+            </section>
 
-            <article className="col-span-2 rounded-[1.4rem] border border-[#f5f5f5]/40 bg-[#f5f5f5]/[0.06] p-4 flex flex-col justify-between">
-              <p className="font-spacemonobold uppercase tracking-[0.11em] text-[0.68rem] text-[#f5f5f5]/65">Focus</p>
-              <p className="font-spacemonobold uppercase text-[0.9rem] text-[#f5f5f5]/90">UX / Web Design</p>
-            </article>
+            <section className="grid grid-cols-6 grid-rows-[1.2fr_1fr_auto] gap-5 h-full">
+              <article className="col-span-3 rounded-[1.5rem] border border-[#f5f5f5]/45 bg-[#f5f5f5]/[0.62] p-5 text-[#111]">
+                <p className="font-spacemonobold tracking-[0.02em] leading-[1.5] text-[clamp(0.7rem,0.92vw,0.9rem)]">
+                  I am Gberiel Marinski, a web designer and developer focused on clean visual systems, interaction, and storytelling through layout and motion.
+                </p>
+              </article>
 
-            <article className="col-span-6 rounded-[1.4rem] border border-[#f5f5f5]/45 bg-[#f5f5f5]/[0.1] px-5 py-4 min-h-[7.25rem] flex items-center justify-between gap-4">
-              <p className="font-spacemonobold uppercase tracking-[0.1em] text-[0.72rem] text-[#f5f5f5]/70">Currently Open For New Projects</p>
-              <a href="mailto:contact@example.com" className="font-spacemonobold uppercase tracking-[0.08em] text-[0.72rem] text-[#f5f5f5] hover:text-[#f5f5f5]/80 transition-colors">
-                Contact ↗
-              </a>
-            </article>
-          </section>
+              <div className="col-span-3 rounded-[1.5rem] border border-[#f5f5f5]/45 bg-[#f5f5f5]/[0.62]" />
+
+              <div className="col-span-2 rounded-[1.4rem] border border-[#f5f5f5]/40 bg-[#f5f5f5]/[0.62]" />
+              <div className="col-span-2 rounded-[1.4rem] border border-[#f5f5f5]/40 bg-[#f5f5f5]/[0.62]" />
+              <div className="col-span-2 rounded-[1.4rem] border border-[#f5f5f5]/40 bg-[#f5f5f5]/[0.62]" />
+
+              <article className="col-span-6 rounded-[1.4rem] border border-[#f5f5f5]/45 bg-[#f5f5f5]/[0.62] px-5 py-4 min-h-[7.25rem] flex items-center justify-between gap-4 text-[#111]">
+                <p className="font-spacemonobold uppercase tracking-[0.1em] text-[0.72rem]">Currently Open For New Projects</p>
+                <a href="mailto:contact@example.com" className="font-spacemonobold uppercase tracking-[0.08em] text-[0.72rem] hover:opacity-70 transition-opacity">
+                  Contact ↗
+                </a>
+              </article>
+            </section>
+          </div>
         </div>
       </div>
     </main>

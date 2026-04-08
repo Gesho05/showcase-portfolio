@@ -6,7 +6,7 @@ export default function ProjectCard({
   description,
   bigDescription,
   thumbnail,
-  modalImages = [], // array of image URLs for left/center/right panels
+  modalImages = [],
   url = '#',
   className = '',
   variant = 'default',
@@ -21,14 +21,6 @@ export default function ProjectCard({
     setModalActive(false);
     setTimeout(() => setSelected(false), 300);
   };
-
-  // Carousel refs/state for drag-to-scroll
-  const carouselRef = useRef(null);
-  const isDragging = useRef(false);
-  const startX = useRef(0);
-  const startScroll = useRef(0);
-  const currentIndex = useRef(0);
-  const wheelDebounce = useRef(null);
 
   useEffect(() => {
     const esc = (e) => { if (e.key === 'Escape') setSelected(false); };
@@ -80,36 +72,6 @@ export default function ProjectCard({
     };
   }, []);
 
-  // carousel helpers (inside component so they can access carouselRef/modalImages)
-  const getSlideWidth = () => {
-    const el = carouselRef.current;
-    if (!el || !el.firstElementChild) return 0;
-    const child = el.firstElementChild;
-    const style = window.getComputedStyle(child);
-    const marginRight = parseFloat(style.marginRight || '0');
-    return Math.round(child.getBoundingClientRect().width + marginRight);
-  };
-
-  const scrollToIndex = (idx) => {
-    const el = carouselRef.current;
-    if (!el) return;
-    const slideW = getSlideWidth();
-    if (!slideW) return;
-    el.scrollTo({ left: idx * slideW, behavior: 'smooth' });
-    currentIndex.current = idx;
-  };
-
-  const moveToNext = () => {
-    const max = (modalImages?.length || 1) - 1;
-    const next = clamp(currentIndex.current + 1, 0, max);
-    scrollToIndex(next);
-  };
-
-  const moveToPrev = () => {
-    const prev = clamp(currentIndex.current - 1, 0, (modalImages?.length || 1) - 1);
-    scrollToIndex(prev);
-  };
-
   const isOverlayVariant = variant === 'overlay';
   const overlayTextClass = overlayTextColor === 'white' ? 'text-white' : 'text-black';
   const secondaryBadgeClass =
@@ -120,6 +82,18 @@ export default function ProjectCard({
   const cardClassName = isOverlayVariant
     ? `w-[clamp(16rem,27vw,25rem)] aspect-square bg-transparent rounded-[2.5rem] overflow-hidden border-[0.2rem] border-black cursor-pointer transform transition-all duration-700 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'} ${className}`
     : `w-72 font-helvetica-compressed bg-[#131313] text-[#f5f5f5] rounded-2xl overflow-hidden border border-gray-800 shadow-lg flex flex-col p-2 cursor-pointer transform transition-all duration-700 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'} ${className}`;
+
+  const renderMediaBlock = (src, altText, wrapperClassName = '', imageClassName = '') => {
+    if (src) {
+      return (
+        <a href={url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className={`block ${wrapperClassName}`}>
+          <img className={`w-full h-auto object-contain rounded-[1.45rem] bg-[#d9d9d9] ${imageClassName}`} src={src} alt={altText} draggable={false} onDragStart={(e) => e.preventDefault()} />
+        </a>
+      );
+    }
+
+    return <div className={`w-full min-h-[12rem] rounded-[1.45rem] bg-[#d0d0d0] ${wrapperClassName}`} aria-hidden="true" />;
+  };
 
   return (
     <>
@@ -161,12 +135,12 @@ export default function ProjectCard({
         )}
       </div>
   {selected && createPortal(
-  <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className={`absolute inset-0 bg-white bg-opacity-60 backdrop-blur-sm transition-opacity duration-300 ${modalActive ? 'opacity-100' : 'opacity-0'}`} data-modal-overlay="light" onClick={closeModal} />
+  <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4">
+          <div className={`absolute inset-0 bg-white/55 backdrop-blur-sm transition-opacity duration-300 ${modalActive ? 'opacity-100' : 'opacity-0'}`} data-modal-overlay="light" onClick={closeModal} />
 
-          <div className={`relative z-10 bg-transparent w-[96%] max-w-[1400px] h-[85vh] rounded-3xl transform transition-all duration-300 ${modalActive ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-95'}`} onClick={(e) => e.stopPropagation()}>
-            <div className="bg-[#131313] rounded-t-3xl h-16 px-6 flex items-center justify-end">
-              <button onClick={closeModal} aria-label="Close modal" className="pt-6 bg-transparent rounded-full w-11 h-11 flex items-center justify-center hover:opacity-90">
+          <div className={`relative z-10 w-[98%] max-w-[1520px] h-[93vh] bg-[#131313] rounded-[2rem] transform transition-all duration-300 ${modalActive ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-[0.985]'}`} onClick={(e) => e.stopPropagation()}>
+            <div className="h-16 px-4 sticky top-0 z-10 bg-[#131313] rounded-t-[2rem]">
+              <button onClick={closeModal} aria-label="Close modal" className="absolute top-4 right-4 bg-transparent rounded-full w-11 h-11 flex items-center justify-center hover:opacity-90">
                 <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 42 42" fill="none" aria-hidden="true">
                   <circle cx="21" cy="21" r="21" fill="#D9D9D9" />
                   <line x1="25.6774" y1="25.6777" x2="15.7779" y2="15.7782" stroke="black" strokeWidth={4} strokeLinecap="round" />
@@ -174,86 +148,54 @@ export default function ProjectCard({
                 </svg>
               </button>
             </div>
+            <style>{`.modal-scroll-hide{scrollbar-width:none;-ms-overflow-style:none;}.modal-scroll-hide::-webkit-scrollbar{display:none;width:0;height:0;}`}</style>
+            <div className="modal-scroll-hide h-[calc(100%-4rem)] overflow-y-auto px-[clamp(1rem,2vw,1.9rem)] pb-8">
+              <div className="w-full rounded-b-[2rem] bg-[#131313] p-[clamp(1rem,2.1vw,1.85rem)]">
+                <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-7">
+                  <div>
+                    <h3 className="font-helvetica-compressed text-[clamp(2.2rem,3.6vw,3.4rem)] text-[#f5f5f5] font-extrabold uppercase leading-none tracking-wide">{title}</h3>
+                    <p className="mt-4 font-spacemonobold text-[0.8rem] text-[#c8c8c8] uppercase leading-[1.55] max-w-[62ch]">{description}</p>
+                    <span className="inline-flex mt-4 rounded-[0.4rem] bg-white/20 px-3 py-1 text-[0.58rem] tracking-[0.12em] font-spacemonobold uppercase text-white/90">Web Design</span>
+                  </div>
 
-            <div className="bg-[#131313] rounded-b-3xl pt-6 pb-0 h-[calc(100%-62px)] flex items-start">
-              <div className="flex flex-col gap-4 px-8 w-full">
-                {/* Carousel viewport */}
-                <div className="relative w-full" style={{ overflow: 'hidden' }}>
-                  {/* hide native scrollbar visually across browsers for the carousel track */}
-                  <style>{`[data-carousel-track] { scrollbar-width: none; -ms-overflow-style: none; }
-                    [data-carousel-track]::-webkit-scrollbar { display: none; }
-                  `}</style>
-                  <div
-                    ref={carouselRef}
-                    data-carousel-track
-                    className="flex gap-0 py-1 px-1 overflow-x-auto"
-                    style={{ cursor: 'grab', touchAction: 'pan-y', scrollSnapType: 'x mandatory', scrollBehavior: 'smooth' }}
-                    onPointerDown={(e) => {
-                      const el = carouselRef.current;
-                      if (!el) return;
-                      isDragging.current = true;
-                      startX.current = e.pageX - el.getBoundingClientRect().left;
-                      startScroll.current = el.scrollLeft;
-                      el.setPointerCapture?.(e.pointerId);
-                      // show grabbing cursor while dragging
-                      try { el.style.cursor = 'grabbing'; } catch (err) {}
-                    }}
-                    onPointerMove={(e) => {
-                      const el = carouselRef.current;
-                      if (!el || !isDragging.current) return;
-                      const x = e.pageX - el.getBoundingClientRect().left;
-                      const walk = x - startX.current;
-                      el.scrollLeft = startScroll.current - walk;
-                    }}
-                    onPointerUp={(e) => {
-                      const el = carouselRef.current;
-                      if (!el) return;
-                      isDragging.current = false;
-                      try { el.releasePointerCapture?.(e.pointerId); } catch (err) {}
-                      try { el.style.cursor = 'grab'; } catch (err) {}
-                      // snap to nearest slide on release
-                      const slideW = getSlideWidth();
-                      if (!slideW) return;
-                      const idx = Math.round(el.scrollLeft / slideW);
-                      scrollToIndex(clamp(idx, 0, (modalImages?.length || 1) - 1));
-                    }}
-                    onPointerLeave={() => { isDragging.current = false; try { const el = carouselRef.current; if (el) el.style.cursor = 'grab'; } catch (err) {} }}
-                    onWheel={(e) => {
-                      const el = carouselRef.current;
-                      if (!el) return;
-                      // debounce wheel so quick scrolls only trigger one slide change
-                      if (wheelDebounce.current) {
-                        e.preventDefault();
-                        return;
-                      }
-                      wheelDebounce.current = setTimeout(() => { wheelDebounce.current = null; }, 120);
-                      if (e.deltaY > 0) moveToNext(); else moveToPrev();
-                      e.preventDefault();
-                    }}
-                  >
-                    {modalImages && modalImages.length > 0 ? modalImages.map((src, idx) => (
-                        <div key={idx} className="flex-shrink-0" style={{ flex: '0 0 550px', width: '550px', scrollSnapAlign: 'center', marginRight: '6px' }}>
-                        <div onClick={(e) => e.stopPropagation()}>
-                          <img
-                            className="w-[550px] h-[360px] object-cover rounded-sm bg-[#e6e6e6]"
-                            src={src}
-                            alt={`${title} ${idx}`}
-                            draggable={false}
-                            onDragStart={(e) => e.preventDefault()}
-                            style={{ userSelect: 'none', WebkitUserDrag: 'none', MozUserSelect: 'none', msUserSelect: 'none' }}
-                          />
-                        </div>
+                  <div className="pt-0 lg:pt-16">
+                    <div className="space-y-2.5 text-[0.72rem] font-spacemonobold uppercase tracking-[0.07em] text-[#d5d5d5]">
+                      <div className="grid grid-cols-[auto_1fr_auto] items-center gap-2 border-b border-white/45 pb-1.5">
+                        <span className="text-[#d6ac42]">Client</span><span className="h-px bg-white/45" /><span>{title.split(' ')[0] || 'PROJECT'}</span>
                       </div>
-                    )) : (
-                      <div className="w-full h-[360px] bg-gray-200 rounded-sm" />
-                    )}
+                      <div className="grid grid-cols-[auto_1fr_auto] items-center gap-2 border-b border-white/45 pb-1.5">
+                        <span className="text-[#d6ac42]">Year</span><span className="h-px bg-white/45" /><span>2025</span>
+                      </div>
+                      <div className="grid grid-cols-[1fr] border-b border-white/45 pb-1.5 text-right">
+                        <a href={url} target="_blank" rel="noopener noreferrer" className="underline hover:text-white transition-colors normal-case">{url}</a>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <div className="text-left mt-4 mb-6 ml-2">
-                  <h3 className="font-helvetica-compressed text-2xl text-[#f5f5f5] font-extrabold uppercase tracking-wide mb-2">{title}</h3>
-                  <p className="font-helvetica-compressed text-sm text-gray-300 uppercase leading-tight max-w-full">{bigDescription}</p>
+                <div className="mt-7 rounded-[1.55rem] p-1.5 bg-[#131313]">
+                  <div className="w-full h-[clamp(22rem,48vw,36rem)] rounded-[1.45rem] overflow-hidden">
+                    {renderMediaBlock(modalImages[0], `${title} hero`, 'h-full', 'h-full object-cover') }
+                  </div>
                 </div>
+
+                <div className="mt-14 mb-14 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                  <h4 className="font-helvetica-compressed text-[clamp(2rem,3.1vw,3.3rem)] text-[#f5f5f5] font-extrabold uppercase leading-[0.95]">{title}, management and execution</h4>
+                  <p className="font-spacemonobold text-[0.8rem] text-[#c6c6c6] uppercase leading-[1.55] self-center">{bigDescription || description}</p>
+                </div>
+
+                <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="h-[clamp(16rem,33vw,24rem)] rounded-[1.45rem] overflow-hidden">{renderMediaBlock(modalImages[1], `${title} detail 1`, 'h-full', 'h-full object-cover')}</div>
+                  <div className="h-[clamp(16rem,33vw,24rem)] rounded-[1.45rem] overflow-hidden">{renderMediaBlock(modalImages[2], `${title} detail 2`, 'h-full', 'h-full object-cover')}</div>
+                </div>
+
+                <div className="mt-4 h-[clamp(22rem,48vw,36rem)] rounded-[1.45rem] overflow-hidden">
+                  {renderMediaBlock(modalImages[3] || modalImages[0], `${title} wide detail`, 'h-full', 'h-full object-cover') }
+                </div>
+
+                <p className="mt-8 font-spacemonobold text-[0.8rem] text-[#a9a9a9] uppercase leading-[1.55] text-left">
+                  Project for a company. Creative direction, website design, UI system and production flow with emphasis on visual clarity and interaction quality.
+                </p>
               </div>
             </div>
           </div>
@@ -262,7 +204,4 @@ export default function ProjectCard({
     </>
   );
 }
-
-// helpers used by the carousel
-function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
 
