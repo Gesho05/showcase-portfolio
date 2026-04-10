@@ -1,22 +1,18 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import AboutBackground from "../assets/images/aboutbackground.png";
+import AboutBackground from "../assets/images/aboutme.JPG";
 
 export default function About() {
   const navigate = useNavigate();
-  const frameClip = 'inset(11% 60% 9% 4.5% round 2rem)';
-  const frameClipExpanded = 'inset(10.6% 59.6% 8.6% 4.1% round 2rem)';
+  const logoModules = import.meta.glob("../assets/logos/*.{png,jpg,jpeg,svg,webp,PNG,JPG,JPEG,SVG,WEBP}", {
+    eager: true,
+    import: "default"
+  });
+  const toolboxLogos = Object.values(logoModules).sort((a, b) => String(a).localeCompare(String(b)));
+  const marqueeLogos = toolboxLogos.length > 0 ? [...toolboxLogos, ...toolboxLogos] : [];
 
   return (
     <main className="bg-[#131313] text-[#f5f5f5] min-h-screen overflow-hidden relative px-[clamp(1.25rem,4vw,3rem)]">
-      <img
-        src={AboutBackground}
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ objectPosition: 'center center' }}
-      />
-      <div className="absolute inset-0 bg-[#131313]/25" />
 
       <div className="fixed top-0 left-0 right-0 z-40 pointer-events-none">
         <button
@@ -41,73 +37,65 @@ export default function About() {
           <button type="button" onClick={() => navigate('/')} className="hover:text-[#f5f5f5] transition-colors">
             HOME
           </button>
-          <a href="mailto:contact@example.com" className="hover:text-[#f5f5f5] transition-colors">
+          <a href="mailto:gebso05@gmail.com" className="hover:text-[#f5f5f5] transition-colors">
             CONTACT
           </a>
         </div>
       </div>
 
       <div className="relative z-10 min-h-screen w-full max-w-[1400px] mx-auto pt-24 pb-8">
-        <div className="relative h-[calc(100vh-7.25rem)] min-h-[640px] rounded-[2rem] overflow-hidden">
-          <img
-            src={AboutBackground}
-            alt=""
-            aria-hidden="true"
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ objectPosition: 'center center' }}
-          />
-
-          <img
-            src={AboutBackground}
-            alt=""
-            aria-hidden="true"
-            className="absolute inset-0 w-full h-full object-cover blur-[7px]"
-            style={{ objectPosition: 'center center' }}
-          />
-
-          <img
-            src={AboutBackground}
-            alt=""
-            aria-hidden="true"
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ clipPath: frameClipExpanded, objectPosition: 'center center' }}
-          />
-
-          <div className="absolute inset-0 bg-[#131313]/35" />
-
-          <img
-            src={AboutBackground}
-            alt=""
-            aria-hidden="true"
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ clipPath: frameClip, objectPosition: 'center center' }}
-          />
-
-          <div className="relative h-full grid grid-cols-1 lg:grid-cols-[minmax(280px,0.95fr)_minmax(520px,1.45fr)] gap-6 p-[clamp(1.1rem,2vw,2rem)]">
-            <section className="rounded-[1.9rem] border border-[#f5f5f5]/70 bg-transparent flex flex-col justify-end overflow-hidden">
-              <div className="pb-7 px-6">
-                <span className="font-spacemonobold uppercase tracking-[0.14em] text-[#f5f5f5]/65 text-[0.78rem]">Photo</span>
-              </div>
+        <style>{`
+          @keyframes toolbox-marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+        `}</style>
+        <div className="h-[calc(100vh-7.25rem)] min-h-[640px]">
+          <div className="h-full grid grid-cols-1 lg:grid-cols-[minmax(320px,0.75fr)_minmax(560px,1.6fr)] gap-7">
+            <section className="rounded-[1.5rem] border border-[#f5f5f5]/25 bg-[#0f0f0f] overflow-hidden">
+              <img
+                src={AboutBackground}
+                alt="Portrait"
+                className="w-full h-full object-cover object-left-center"
+              />
             </section>
 
-            <section className="grid grid-cols-6 grid-rows-[1.2fr_1fr_auto] gap-5 h-full">
-              <article className="col-span-3 rounded-[1.5rem] border border-[#f5f5f5]/45 bg-[#f5f5f5]/[0.62] p-5 text-[#111]">
-                <p className="font-spacemonobold tracking-[0.02em] leading-[1.5] text-[clamp(0.7rem,0.92vw,0.9rem)]">
-                  I am Gberiel Marinski, a web designer and developer focused on clean visual systems, interaction, and storytelling through layout and motion.
+            <section className="grid grid-cols-6 grid-rows-[1.35fr_1.05fr_auto] gap-6 h-full">
+              <article className="col-span-3 rounded-[1.65rem] border border-[#f5f5f5]/45 bg-[#f5f5f5]/[0.62] p-6 text-[#111]">
+                <p className="font-spacemonobold tracking-[0.02em] leading-[1.55] text-[clamp(0.78rem,1.05vw,1rem)]">
+                  I am Gebriel Marinski, a web designer and developer focused on clean visual systems, interaction, and storytelling through layout and motion.
                 </p>
               </article>
 
-              <div className="col-span-3 rounded-[1.5rem] border border-[#f5f5f5]/45 bg-[#f5f5f5]/[0.62]" />
+              <div className="col-span-3 rounded-[1.65rem] border border-[#f5f5f5]/45 bg-[#f5f5f5]/[0.62]" />
 
-              <div className="col-span-2 rounded-[1.4rem] border border-[#f5f5f5]/40 bg-[#f5f5f5]/[0.62]" />
-              <div className="col-span-2 rounded-[1.4rem] border border-[#f5f5f5]/40 bg-[#f5f5f5]/[0.62]" />
-              <div className="col-span-2 rounded-[1.4rem] border border-[#f5f5f5]/40 bg-[#f5f5f5]/[0.62]" />
+              <div className="col-span-2 rounded-[1.55rem] border border-[#f5f5f5]/40 bg-[#f5f5f5]/[0.62]" />
+              <div className="col-span-2 rounded-[1.55rem] border border-[#f5f5f5]/40 bg-[#f5f5f5]/[0.62]" />
+              <div className="col-span-2 rounded-[1.55rem] border border-[#f5f5f5]/40 bg-[#f5f5f5]/[0.62]" />
 
-              <article className="col-span-6 rounded-[1.4rem] border border-[#f5f5f5]/45 bg-[#f5f5f5]/[0.62] px-5 py-4 min-h-[7.25rem] flex items-center justify-between gap-4 text-[#111]">
-                <p className="font-spacemonobold uppercase tracking-[0.1em] text-[0.72rem]">Currently Open For New Projects</p>
-                <a href="mailto:contact@example.com" className="font-spacemonobold uppercase tracking-[0.08em] text-[0.72rem] hover:opacity-70 transition-opacity">
-                  Contact ↗
-                </a>
+              <article className="col-span-6 rounded-[1.55rem] border border-[#f5f5f5]/45 bg-[#0d0d0d]/70 px-6 py-5 min-h-[10rem] flex items-center gap-8 overflow-hidden text-[#f5f5f5]">
+                <div className="w-[15.5rem] shrink-0">
+                  <p className="font-spacemonobold uppercase tracking-[0.1em] text-[0.78rem]">Everyday&apos;s Toolbox</p>
+                  <p className="mt-2 font-spacemonobold text-[#c9c9c9] uppercase text-[0.78rem] tracking-[0.05em]">Mastered for every project.</p>
+                </div>
+
+                <div className="flex-1 overflow-hidden">
+                  <div className="flex w-max items-center gap-4 animate-[toolbox-marquee_28s_linear_infinite]">
+                    {marqueeLogos.map((logoSrc, index) => (
+                      <div
+                        key={`${logoSrc}-${index}`}
+                        className="w-[4.9rem] h-[4.9rem] rounded-[0.9rem] border border-[#f5f5f5]/45 bg-white/[0.02] flex items-center justify-center shrink-0"
+                      >
+                        <img
+                          src={logoSrc}
+                          alt=""
+                          aria-hidden="true"
+                          className="w-[64%] h-[64%] object-contain"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </article>
             </section>
           </div>

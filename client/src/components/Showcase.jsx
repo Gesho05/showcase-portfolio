@@ -4,6 +4,10 @@ import CrossyImg from "../assets/images/Crossy.png";
 import CrossyComputer from "../assets/images/computer-crossy.png";
 import CrossyComputer2 from "../assets/images/computer-crossy2.png";
 import CrossyPhone from "../assets/images/phone-crossy.png";
+import OWOWMock from "../assets/images/OWOWmock.png";
+import OWOWMain from "../assets/images/OWOWmain.png";
+import OWOWDraw from "../assets/images/OWOWdraw.gif";
+import OWOWDesign from "../assets/images/OWOWdesign.png";
 import OBCover from "../assets/images/OB-cover.png";
 import OBComputer from "../assets/images/OB-computer.png";
 import Texture from "../assets/images/texture.jpg";
@@ -28,12 +32,18 @@ export default function Showcase() {
         <div className="grid grid-cols-1 md:grid-cols-3 items-start justify-items-center gap-6 md:gap-3">
           <ProjectCard
             variant="overlay"
-            title="CROSSY ROAD CLONE"
-            description={'A CLONE OF THE POPULAR MOBILE GAME "CROSSY ROAD", BUILT AS A WEB APPLICATION USING THREE.JS'}
-            bigDescription={'A clone of the popular mobile game "Crossy Road", built as a web application using Three.js. The game features 3D graphics, smooth animations, and engaging gameplay that captures the essence of the original game.'}
-            thumbnail={CrossyImg}
-            modalImages={[CrossyComputer, CrossyPhone, CrossyComputer2]}
-            url={'https://crossy-road-clone-steel.vercel.app'}
+            overlayTextColor="white"
+            title="OWOW DASHBOARD"
+            description={'For the company OWOW, I worked in a team to developed an interactive dashboard designed to control a physical flip-dot board. The primary goal was to create a seamless bridge between digital input and physical hardware, allowing users to trigger pre-set animations or design their own custom visuals directly from the web.'}
+            middleHeading="MY ROLE IN THE PROJECT"
+            middleText={'I was responsible for the full design cycle and the frontend implementation of the interface. My focus was on creating a modern, user-friendly experience that followed current design trends while remaining highly functional. I conducted the UX research and UI design to make the animation-creation process as intuitive as possible for the end user. Once the design was finalized, I took charge of the implementation, ensuring the transition from a static design to a functional website was pixel-perfect and responsive.'}
+            bottomText={'The design process began in Figma, where I built high-fidelity prototypes to map out the user journey and visual aesthetic. To bring the dashboard to life, I used a modern tech stack consisting of Next.js and React. The entire project was built using TypeScript to ensure code reliability and a high-performance experience that could handle real-time data for the flip-dot animations.'}
+            coverObjectPosition="50% 22%"
+            heroObjectPosition="70% 62%"
+            projectLinkLabel="OWOW project"
+            thumbnail={OWOWMock}
+            modalImages={[OWOWMock, OWOWMain, OWOWDraw, OWOWDesign]}
+            url={'https://owow-project.vercel.app/'}
             className="md:-translate-y-10"
           />
 

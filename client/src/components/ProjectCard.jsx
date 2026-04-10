@@ -5,6 +5,12 @@ export default function ProjectCard({
   title,
   description,
   bigDescription,
+  middleHeading,
+  middleText,
+  bottomText,
+  projectLinkLabel,
+  coverObjectPosition = 'center 62%',
+  heroObjectPosition = '50% 50%',
   thumbnail,
   modalImages = [],
   url = '#',
@@ -83,11 +89,11 @@ export default function ProjectCard({
     ? `w-[clamp(16rem,27vw,25rem)] aspect-square bg-transparent rounded-[2.5rem] overflow-hidden border-[0.2rem] border-black cursor-pointer transform transition-all duration-700 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'} ${className}`
     : `w-72 font-helvetica-compressed bg-[#131313] text-[#f5f5f5] rounded-2xl overflow-hidden border border-gray-800 shadow-lg flex flex-col p-2 cursor-pointer transform transition-all duration-700 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'} ${className}`;
 
-  const renderMediaBlock = (src, altText, wrapperClassName = '', imageClassName = '') => {
+  const renderMediaBlock = (src, altText, wrapperClassName = '', imageClassName = '', objectPosition) => {
     if (src) {
       return (
         <a href={url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className={`block ${wrapperClassName}`}>
-          <img className={`w-full h-auto object-contain rounded-[1.45rem] bg-[#d9d9d9] ${imageClassName}`} src={src} alt={altText} draggable={false} onDragStart={(e) => e.preventDefault()} />
+          <img className={`w-full h-auto object-contain rounded-[1.45rem] bg-[#d9d9d9] ${imageClassName}`} src={src} alt={altText} style={objectPosition ? { objectPosition } : undefined} draggable={false} onDragStart={(e) => e.preventDefault()} />
         </a>
       );
     }
@@ -112,7 +118,7 @@ export default function ProjectCard({
               className="h-full w-full object-cover"
               src={thumbnail}
               alt={title}
-              style={{ objectPosition: 'center 62%' }}
+              style={{ objectPosition: coverObjectPosition }}
             />
             <div className={`absolute top-0 left-0 p-[clamp(0.65rem,1.2vw,1rem)] ${overlayTextClass} text-left flex flex-col items-start`}>
               <h2 className="font-helvetica-compressed text-[clamp(1.1rem,1.6vw,1.75rem)] leading-none tracking-wide uppercase mb-1 text-left w-full">
@@ -167,7 +173,9 @@ export default function ProjectCard({
                         <span className="text-[#d6ac42]">Year</span><span className="h-px bg-white/45" /><span>2025</span>
                       </div>
                       <div className="grid grid-cols-[1fr] border-b border-white/45 pb-1.5 text-right">
-                        <a href={url} target="_blank" rel="noopener noreferrer" className="underline hover:text-white transition-colors normal-case">{url}</a>
+                        <a href={url} target="_blank" rel="noopener noreferrer" className="underline hover:text-white transition-colors normal-case">
+                          {projectLinkLabel || url}
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -175,26 +183,26 @@ export default function ProjectCard({
 
                 <div className="mt-7 rounded-[1.55rem] p-1.5 bg-[#131313]">
                   <div className="w-full h-[clamp(22rem,48vw,36rem)] rounded-[1.45rem] overflow-hidden">
-                    {renderMediaBlock(modalImages[0], `${title} hero`, 'h-full', 'h-full object-cover') }
+                    {renderMediaBlock(modalImages[0], `${title} hero`, 'h-full', 'h-full object-cover', heroObjectPosition) }
                   </div>
                 </div>
 
                 <div className="mt-14 mb-14 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-                  <h4 className="font-helvetica-compressed text-[clamp(2rem,3.1vw,3.3rem)] text-[#f5f5f5] font-extrabold uppercase leading-[0.95]">{title}, management and execution</h4>
-                  <p className="font-spacemonobold text-[0.8rem] text-[#c6c6c6] uppercase leading-[1.55] self-center">{bigDescription || description}</p>
+                  <h4 className="font-helvetica-compressed text-[clamp(2rem,3.1vw,3.3rem)] text-[#f5f5f5] font-extrabold uppercase leading-[0.95]">{middleHeading || `${title}, management and execution`}</h4>
+                  <p className="font-spacemonobold text-[0.8rem] text-[#c6c6c6] uppercase leading-[1.55] self-center">{middleText || bigDescription || description}</p>
                 </div>
 
                 <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="h-[clamp(16rem,33vw,24rem)] rounded-[1.45rem] overflow-hidden">{renderMediaBlock(modalImages[1], `${title} detail 1`, 'h-full', 'h-full object-cover')}</div>
-                  <div className="h-[clamp(16rem,33vw,24rem)] rounded-[1.45rem] overflow-hidden">{renderMediaBlock(modalImages[2], `${title} detail 2`, 'h-full', 'h-full object-cover')}</div>
+                  <div className="h-[clamp(12.5rem,25vw,17rem)] rounded-[1.45rem] overflow-hidden">{renderMediaBlock(modalImages[1], `${title} detail 1`, 'h-full', 'h-full object-cover object-[50%_22%]')}</div>
+                  <div className="h-[clamp(12.5rem,25vw,17rem)] rounded-[1.45rem] overflow-hidden">{renderMediaBlock(modalImages[2], `${title} detail 2`, 'h-full', 'h-full object-cover object-[50%_22%]')}</div>
                 </div>
 
                 <div className="mt-4 h-[clamp(22rem,48vw,36rem)] rounded-[1.45rem] overflow-hidden">
-                  {renderMediaBlock(modalImages[3] || modalImages[0], `${title} wide detail`, 'h-full', 'h-full object-cover') }
+                  {renderMediaBlock(modalImages[3] || modalImages[0], `${title} wide detail`, 'h-full', 'h-full object-cover object-[50%_22%]') }
                 </div>
 
                 <p className="mt-8 font-spacemonobold text-[0.8rem] text-[#a9a9a9] uppercase leading-[1.55] text-left">
-                  Project for a company. Creative direction, website design, UI system and production flow with emphasis on visual clarity and interaction quality.
+                  {bottomText || 'Project for a company. Creative direction, website design, UI system and production flow with emphasis on visual clarity and interaction quality.'}
                 </p>
               </div>
             </div>

@@ -59,6 +59,24 @@ body {
   min-height: 100%;
 }
 
+/* Prevent selecting/copying page text and dragging media assets */
+html,
+body,
+#root,
+#root * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+img,
+svg,
+video,
+canvas {
+  -webkit-user-drag: none;
+}
+
 html.custom-cursor-enabled,
 html.custom-cursor-enabled *,
 body.custom-cursor-enabled,

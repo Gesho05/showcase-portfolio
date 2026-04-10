@@ -55,14 +55,14 @@ export default function Footer() {
       >
         <div className="text-white">DESIGNED 2025 ®</div>
         <a
-          href="https://www.instagram.com/gebomar05"
+          href="https://www.linkedin.com/in/gebriel-marinski-b73400398/"
           target="_blank"
           rel="noopener noreferrer"
           className="no-underline text-white"
         >
-          INSTAGRAM
+          LINKEDIN
         </a>
-        <a href="mailto:contact@example.com" className="no-underline text-white">
+        <a href="mailto:gebso05@gmail.com" className="no-underline text-white">
           EMAIL
         </a>
         <a

@@ -215,6 +215,26 @@ function App() {
     }
   }, [isLoading])
 
+  useEffect(() => {
+    const preventAction = (event) => {
+      event.preventDefault()
+    }
+
+    document.addEventListener('copy', preventAction)
+    document.addEventListener('cut', preventAction)
+    document.addEventListener('selectstart', preventAction)
+    document.addEventListener('contextmenu', preventAction)
+    document.addEventListener('dragstart', preventAction)
+
+    return () => {
+      document.removeEventListener('copy', preventAction)
+      document.removeEventListener('cut', preventAction)
+      document.removeEventListener('selectstart', preventAction)
+      document.removeEventListener('contextmenu', preventAction)
+      document.removeEventListener('dragstart', preventAction)
+    }
+  }, [])
+
   return (
     <>
       {isLoading && (
