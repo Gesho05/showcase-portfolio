@@ -31,9 +31,6 @@ export default function About() {
           className="fixed right-6 top-5 flex items-center gap-9 text-sm uppercase tracking-[0.07em] text-[#f5f5f5]/90 pointer-events-auto"
           style={{ fontFamily: "'SpaceMonoBold', sans-serif" }}
         >
-          <button type="button" onClick={() => navigate('/about')} className="hover:text-[#f5f5f5] transition-colors">
-            ABOUT
-          </button>
           <button type="button" onClick={() => navigate('/')} className="hover:text-[#f5f5f5] transition-colors">
             HOME
           </button>

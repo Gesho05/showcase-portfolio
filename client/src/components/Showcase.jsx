@@ -4,6 +4,10 @@ import CrossyImg from "../assets/images/Crossy.png";
 import CrossyComputer from "../assets/images/computer-crossy.png";
 import CrossyComputer2 from "../assets/images/computer-crossy2.png";
 import CrossyPhone from "../assets/images/phone-crossy.png";
+import BanskoThumb from "../assets/images/banskotumb.png";
+import Bansko1 from "../assets/images/bansko1.png";
+import BanskoFigma from "../assets/images/banskofigma.png";
+import BanskoGif from "../assets/images/banskogif.gif";
 import OWOWMock from "../assets/images/OWOWmock.png";
 import OWOWMain from "../assets/images/OWOWmain.png";
 import OWOWDraw from "../assets/images/OWOWdraw.gif";
@@ -49,12 +53,18 @@ export default function Showcase() {
 
           <ProjectCard
             variant="overlay"
-            title="CROSSY ROAD CLONE"
-            description={'A CLONE OF THE POPULAR MOBILE GAME "CROSSY ROAD", BUILT AS A WEB APPLICATION USING THREE.JS'}
-            bigDescription={'A clone of the popular mobile game "Crossy Road", built as a web application using Three.js. The game features 3D graphics, smooth animations, and engaging gameplay that captures the essence of the original game.'}
-            thumbnail={CrossyImg}
-            modalImages={[CrossyComputer, CrossyPhone, CrossyComputer2]}
-            url={'https://crossy-road-clone-steel.vercel.app'}
+            title="BANSKO PROJECT"
+            overlayBadges={["WEB DESIGN", "WEB DEVELOPMENT"]}
+            popupBadges={["Web Design", "Web Development"]}
+            clientLabel="Fontys UAS"
+            projectLinkLabel="Bansko Project"
+            coverObjectPosition="50% 68%"
+            description={'This independent university project focused on a comprehensive redesign concept for the official website of Bansko, Bulgaria\'s most famous ski resort. The objective was to transform the existing platform into a world-class digital destination that reflects the prestige of the location.'}
+            middleText={'As the sole creator of this project, I managed the entire lifecycle from conceptual research to the final development of the website. My work involved researching current European design trends to implement a cleaner aesthetic and a more engaging user journey that simplifies navigation.'}
+            bottomText={'I began the process by creating a high-fidelity interactive prototype to test the new layout and visual flow. For the development phase, I utilized Next.js to build a fast, SEO-friendly application that could handle high-quality imagery without compromising performance. By using React and modern CSS techniques, I was able to translate my design vision into a responsive, functional website that brings a contemporary feel to the Bansko brand.'}
+            thumbnail={BanskoThumb}
+            modalImages={[Bansko1, BanskoFigma, CrossyPhone, BanskoGif]}
+            url={'https://bansko.vercel.app/'}
             className="md:translate-y-14"
           />
 

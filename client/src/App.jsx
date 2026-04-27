@@ -31,7 +31,7 @@ function App() {
 
     let attempts = 0
     const tryCaptureLogo = () => {
-      const headerLogo = document.querySelector('#section-header svg[viewBox="0 0 5016 381"]')
+      const headerLogo = document.querySelector('#section-header svg[viewBox="0 0 5016 381"], [data-persistent-header="true"] svg[viewBox="0 0 5016 381"]')
       if (headerLogo) {
         setLoaderLogoMarkup(headerLogo.outerHTML)
         return true

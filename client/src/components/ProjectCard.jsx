@@ -9,8 +9,13 @@ export default function ProjectCard({
   middleText,
   bottomText,
   projectLinkLabel,
+  clientLabel,
+  overlayBadges = ['WEB DESIGN'],
+  popupBadges = ['Web Design'],
   coverObjectPosition = 'center 62%',
   heroObjectPosition = '50% 50%',
+  wideMediaHeightClass = 'h-[clamp(22rem,48vw,36rem)]',
+  wideMediaImageClass = 'h-full object-cover object-[50%_22%]',
   thumbnail,
   modalImages = [],
   url = '#',
@@ -124,9 +129,16 @@ export default function ProjectCard({
               <h2 className="font-helvetica-compressed text-[clamp(1.1rem,1.6vw,1.75rem)] leading-none tracking-wide uppercase mb-1 text-left w-full">
                 {title}
               </h2>
-              <p className={`font-helvetica-compressed uppercase text-[clamp(0.62rem,0.82vw,0.9rem)] leading-tight opacity-95 text-left inline-flex items-center px-[clamp(0.4rem,0.75vw,0.62rem)] py-[clamp(0.12rem,0.24vw,0.2rem)] rounded-[0.42rem] ${secondaryBadgeClass}`}>
-                WEB DESIGNER
-              </p>
+              <div className="mt-1 flex flex-wrap items-center gap-1.5">
+                {overlayBadges.map((badge) => (
+                  <p
+                    key={badge}
+                    className={`font-helvetica-compressed uppercase text-[clamp(0.62rem,0.82vw,0.9rem)] leading-tight opacity-95 text-left inline-flex items-center px-[clamp(0.4rem,0.75vw,0.62rem)] py-[clamp(0.12rem,0.24vw,0.2rem)] rounded-[0.42rem] ${secondaryBadgeClass}`}
+                  >
+                    {badge}
+                  </p>
+                ))}
+              </div>
             </div>
           </div>
         ) : (
@@ -161,13 +173,22 @@ export default function ProjectCard({
                   <div>
                     <h3 className="font-helvetica-compressed text-[clamp(2.2rem,3.6vw,3.4rem)] text-[#f5f5f5] font-extrabold uppercase leading-none tracking-wide">{title}</h3>
                     <p className="mt-4 font-spacemonobold text-[0.8rem] text-[#c8c8c8] uppercase leading-[1.55] max-w-[62ch]">{description}</p>
-                    <span className="inline-flex mt-4 rounded-[0.4rem] bg-white/20 px-3 py-1 text-[0.58rem] tracking-[0.12em] font-spacemonobold uppercase text-white/90">Web Design</span>
+                    <div className="mt-4 flex flex-wrap items-center gap-2">
+                      {popupBadges.map((badge) => (
+                        <span
+                          key={badge}
+                          className="inline-flex rounded-[0.4rem] bg-white/20 px-3 py-1 text-[0.58rem] tracking-[0.12em] font-spacemonobold uppercase text-white/90"
+                        >
+                          {badge}
+                        </span>
+                      ))}
+                    </div>
                   </div>
 
                   <div className="pt-0 lg:pt-16">
                     <div className="space-y-2.5 text-[0.72rem] font-spacemonobold uppercase tracking-[0.07em] text-[#d5d5d5]">
                       <div className="grid grid-cols-[auto_1fr_auto] items-center gap-2 border-b border-white/45 pb-1.5">
-                        <span className="text-[#d6ac42]">Client</span><span className="h-px bg-white/45" /><span>{title.split(' ')[0] || 'PROJECT'}</span>
+                        <span className="text-[#d6ac42]">Client</span><span className="h-px bg-white/45" /><span>{clientLabel || title.split(' ')[0] || 'PROJECT'}</span>
                       </div>
                       <div className="grid grid-cols-[auto_1fr_auto] items-center gap-2 border-b border-white/45 pb-1.5">
                         <span className="text-[#d6ac42]">Year</span><span className="h-px bg-white/45" /><span>2025</span>
@@ -197,8 +218,8 @@ export default function ProjectCard({
                   <div className="h-[clamp(12.5rem,25vw,17rem)] rounded-[1.45rem] overflow-hidden">{renderMediaBlock(modalImages[2], `${title} detail 2`, 'h-full', 'h-full object-cover object-[50%_22%]')}</div>
                 </div>
 
-                <div className="mt-4 h-[clamp(22rem,48vw,36rem)] rounded-[1.45rem] overflow-hidden">
-                  {renderMediaBlock(modalImages[3] || modalImages[0], `${title} wide detail`, 'h-full', 'h-full object-cover object-[50%_22%]') }
+                <div className={`mt-4 ${wideMediaHeightClass} rounded-[1.45rem] overflow-hidden`}>
+                  {renderMediaBlock(modalImages[3] || modalImages[0], `${title} wide detail`, 'h-full', wideMediaImageClass) }
                 </div>
 
                 <p className="mt-8 font-spacemonobold text-[0.8rem] text-[#a9a9a9] uppercase leading-[1.55] text-left">
