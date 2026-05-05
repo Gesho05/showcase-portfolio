@@ -7,16 +7,21 @@ import CrossyPhone from "../assets/images/phone-crossy.png";
 import BanskoThumb from "../assets/images/banskotumb.png";
 import Bansko1 from "../assets/images/bansko1.png";
 import BanskoFigma from "../assets/images/banskofigma.png";
-import BanskoGif from "../assets/images/banskogif.gif";
+import Bansko3 from "../assets/images/bansko3.png";
+import BanskoGif from "../assets/images/banskobig2.png";
 import OWOWMock from "../assets/images/OWOWmock.png";
 import OWOWMain from "../assets/images/OWOWmain.png";
 import OWOWDraw from "../assets/images/OWOWdraw.gif";
 import OWOWDesign from "../assets/images/OWOWdesign.png";
 import OBCover from "../assets/images/OB-cover.png";
 import OBComputer from "../assets/images/OB-computer.png";
+import Accomodation1 from "../assets/images/accomodation1.png";
+import AccomodationBig2 from "../assets/images/accomodationbig2.png";
+import AccomodationFront from "../assets/images/accomodationfront.png";
+import Accomodation2 from "../assets/images/accomodation2.png";
+import AccomodationSmall1 from "../assets/images/accomodationsmall1.png";
 import Texture from "../assets/images/texture.jpg";
 import OBTablet from "../assets/images/OB-tablet.png";
-import OBWeb from "../assets/images/OB-web.png";
 
 export default function Showcase() {
   return (
@@ -58,25 +63,38 @@ export default function Showcase() {
             popupBadges={["Web Design", "Web Development"]}
             clientLabel="Fontys UAS"
             projectLinkLabel="Bansko Project"
-            coverObjectPosition="50% 68%"
+            coverObjectPosition="0% 16%"
+            heroObjectPosition="50% 14%"
+            heroHeightClass={'h-[clamp(28rem,56vw,44rem)]'}
+            wideMediaHeightClass={'h-[clamp(28rem,56vw,44rem)]'}
             description={'This independent university project focused on a comprehensive redesign concept for the official website of Bansko, Bulgaria\'s most famous ski resort. The objective was to transform the existing platform into a world-class digital destination that reflects the prestige of the location.'}
             middleText={'As the sole creator of this project, I managed the entire lifecycle from conceptual research to the final development of the website. My work involved researching current European design trends to implement a cleaner aesthetic and a more engaging user journey that simplifies navigation.'}
             bottomText={'I began the process by creating a high-fidelity interactive prototype to test the new layout and visual flow. For the development phase, I utilized Next.js to build a fast, SEO-friendly application that could handle high-quality imagery without compromising performance. By using React and modern CSS techniques, I was able to translate my design vision into a responsive, functional website that brings a contemporary feel to the Bansko brand.'}
             thumbnail={BanskoThumb}
-            modalImages={[Bansko1, BanskoFigma, CrossyPhone, BanskoGif]}
+            modalImages={[Bansko1, BanskoFigma, Bansko3, BanskoGif]}
             url={'https://bansko.vercel.app/'}
             className="md:translate-y-14"
           />
 
           <ProjectCard
             variant="overlay"
-            overlayTextColor="white"
-            title="ARTIST PROJECT"
-            description={'A PROTOTYPE WEBSITE CREATED FOR THE ARTIST OWEBN BRTYCE together with his branding'}
-            bigDescription={'Me and my group created a branding profile of the artist Owen Bryce (website, logo and posters). I worked mostly on designing the website and posters, and also i participated in the photoshoot we performed for the client. The website is a prototype and not live.'}
-            thumbnail={OBCover}
-            modalImages={[OBComputer, OBWeb, OBTablet]}
-            url={'https://www.figma.com/proto/en1JVhSd6vK2nCbIY5OB8w/PRJ1-Mood-Boards?page-id=194%3A4&node-id=596-203&viewport=195%2C-54%2C0.06&t=SyG46jR3QKZATXqH-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1815%3A78'}
+            title="ACCOMODATION WEBSITE"
+            overlayBadges={["WEB DESIGN", "WEB DEVELOPMENT"]}
+            popupBadges={["Web Design", "Web Development"]}
+            clientLabel="High School Project"
+            projectYear="2023"
+            showProjectLink={false}
+            mediaLinkEnabled={false}
+            description={'For my high school final project, I developed a comprehensive full-stack web application designed for booking and managing accommodations, similar to platforms like Airbnb. The goal was to create a functional marketplace where users could list properties and make reservations through a seamless digital interface.'}
+            middleText={'Working independently, I took on the roles of both frontend and backend developer. Beyond the visual design, I focused heavily on the functional integrity of the site, implementing robust form validations and security protocols to protect user data. I also integrated an automated communication system that sends confirmation emails to users once a reservation is successfully placed.'}
+            bottomText={'The application was built using the MERN stack, utilizing MongoDB for flexible data storage and Express.js and Node.js for the server-side logic. The frontend was developed with React to create a dynamic and responsive user interface. By managing the entire stack alone, I was able to gain deep experience in connecting a NoSQL database with a frontend UI, ensuring that data flowed correctly across the entire application while maintaining high standards for code security and performance.'}
+            thumbnail={AccomodationFront}
+            coverImageClassName="scale-[1.14]"
+            heroObjectPosition="50% 0%"
+            detailImageClass="h-full object-cover object-top"
+            detailSecondImageClass="h-full object-cover object-top"
+            wideMediaImageClass="h-full object-cover object-top"
+            modalImages={[Accomodation1, AccomodationSmall1, Accomodation2, AccomodationBig2]}
             className="md:-translate-y-10"
           />
         </div>

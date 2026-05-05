@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AboutBackground from "../assets/images/aboutme.JPG";
+import DevImage from "../assets/images/dev.png";
+import DesignImage from "../assets/images/design.png";
+import GitHub2 from "../assets/images/gitgub2.png";
 
 export default function About() {
   const navigate = useNavigate();
@@ -11,8 +14,16 @@ export default function About() {
   const toolboxLogos = Object.values(logoModules).sort((a, b) => String(a).localeCompare(String(b)));
   const marqueeLogos = toolboxLogos.length > 0 ? [...toolboxLogos, ...toolboxLogos] : [];
 
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = previousOverflow || ''
+    }
+  }, [])
+
   return (
-    <main className="bg-[#131313] text-[#f5f5f5] min-h-screen overflow-hidden relative px-[clamp(1.25rem,4vw,3rem)]">
+    <main className="bg-[#131313] text-[#f5f5f5] min-h-screen overflow-hidden relative pt-[7.25rem] px-[clamp(1.25rem,4vw,3rem)]">
 
       <div className="fixed top-0 left-0 right-0 z-40 pointer-events-none">
         <button
@@ -40,15 +51,8 @@ export default function About() {
         </div>
       </div>
 
-      <div className="relative z-10 min-h-screen w-full max-w-[1400px] mx-auto pt-24 pb-8">
-        <style>{`
-          @keyframes toolbox-marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-          }
-        `}</style>
-        <div className="h-[calc(100vh-7.25rem)] min-h-[640px]">
-          <div className="h-full grid grid-cols-1 lg:grid-cols-[minmax(320px,0.75fr)_minmax(560px,1.6fr)] gap-7">
+          <div className="h-[calc(100vh-7.25rem)] min-h-[640px]">
+            <div className="h-full grid grid-cols-1 lg:grid-cols-[minmax(320px,0.75fr)_minmax(560px,1.6fr)] gap-7 -translate-y-6">
             <section className="rounded-[1.5rem] border border-[#f5f5f5]/25 bg-[#0f0f0f] overflow-hidden">
               <img
                 src={AboutBackground}
@@ -58,17 +62,62 @@ export default function About() {
             </section>
 
             <section className="grid grid-cols-6 grid-rows-[1.35fr_1.05fr_auto] gap-6 h-full">
-              <article className="col-span-3 rounded-[1.65rem] border border-[#f5f5f5]/45 bg-[#f5f5f5]/[0.62] p-6 text-[#111]">
-                <p className="font-spacemonobold tracking-[0.02em] leading-[1.55] text-[clamp(0.78rem,1.05vw,1rem)]">
-                  I am Gebriel Marinski, a web designer and developer focused on clean visual systems, interaction, and storytelling through layout and motion.
+              <article className="col-span-3 rounded-[1.65rem] border border-[#f5f5f5]/40 bg-[#0f0f0f] p-6 text-[#f5f5f5] text-left">
+                <p className="font-spacemonobold uppercase tracking-[0.12em] text-[1.04rem] text-[#d3d3d3]">Profile</p>
+                <p className="mt-3 max-w-[62ch] font-spacemonobold tracking-[0.01em] leading-[1.6] text-[clamp(0.68rem,0.84vw,0.84rem)] text-[#e5e5e5] text-left">
+                  I am a second-year ICT student at Fontys University of Applied Sciences, specializing in Media Design. My work lives at the intersection of creative design and functional coding, which is why I am deeply passionate about frontend development. I thrive on the challenge of taking a complex idea and turning it into a clean, interactive, and visually engaging digital experience that follows modern industry trends.
                 </p>
               </article>
 
-              <div className="col-span-3 rounded-[1.65rem] border border-[#f5f5f5]/45 bg-[#f5f5f5]/[0.62]" />
+              <article className="col-span-3 rounded-[1.65rem] border border-[#f5f5f5]/40 bg-[#0f0f0f] p-6 text-[#f5f5f5] text-left">
+                <p className="font-spacemonobold uppercase tracking-[0.12em] text-[1.04rem] text-[#d3d3d3]">Experience</p>
+                <p className="mt-3 max-w-[62ch] font-spacemonobold tracking-[0.01em] leading-[1.6] text-[clamp(0.68rem,0.84vw,0.84rem)] text-[#e5e5e5] text-left">
+                  Throughout my studies, I have gained professional experience by delivering high-quality projects for real-world clients in an international environment. My portfolio includes everything from custom dashboards and web applications to creative game design. I am a highly motivated and communicative person who excels in a team setting, and I am eager to bring my ambitious mindset and technical skills to a professional organization.
+                </p>
+              </article>
 
-              <div className="col-span-2 rounded-[1.55rem] border border-[#f5f5f5]/40 bg-[#f5f5f5]/[0.62]" />
-              <div className="col-span-2 rounded-[1.55rem] border border-[#f5f5f5]/40 bg-[#f5f5f5]/[0.62]" />
-              <div className="col-span-2 rounded-[1.55rem] border border-[#f5f5f5]/40 bg-[#f5f5f5]/[0.62]" />
+              <div className="col-span-2 rounded-[1.55rem] border border-[#f5f5f5]/40 bg-[#0f0f0f] relative overflow-hidden flex items-center justify-center p-4">
+                <img
+                  src={DesignImage}
+                  alt="Web Design"
+                  className="w-[80%] h-[80%] object-contain"
+                />
+
+                <div className="absolute left-4 bottom-4 text-left">
+                  <p className="font-spacemonobold text-white text-[0.78rem] uppercase">WEB DESIGN</p>
+                </div>
+              </div>
+              <div className="col-span-2 rounded-[1.55rem] border border-[#f5f5f5]/40 bg-[#0f0f0f] relative overflow-hidden flex items-center justify-center p-4">
+                <img
+                  src={DevImage}
+                  alt="Web Development"
+                  className="w-[80%] h-[80%] object-contain"
+                />
+
+                <div className="absolute left-4 bottom-4 text-left">
+                  <p className="font-spacemonobold text-white text-[0.78rem] uppercase">WEB DEVELOPMENT</p>
+                </div>
+              </div>
+
+              <a
+                href="https://github.com/Gesho05"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="col-span-2 rounded-[1.55rem] border border-[#f5f5f5]/40 bg-[#0f0f0f] relative overflow-hidden flex items-center justify-center p-4"
+                aria-label="GitHub profile"
+                data-cursor-project="true"
+                data-cursor-label="go to page"
+              >
+                <img
+                  src={GitHub2}
+                  alt="GitHub"
+                  className="w-[80%] h-[80%] object-contain"
+                />
+
+                <div className="absolute left-4 bottom-4 text-left">
+                  <p className="font-spacemonobold text-white text-[0.78rem] uppercase">ALL PROJECTS <span className="ml-2">→</span></p>
+                </div>
+              </a>
 
               <article className="col-span-6 rounded-[1.55rem] border border-[#f5f5f5]/45 bg-[#0d0d0d]/70 px-6 py-5 min-h-[10rem] flex items-center gap-8 overflow-hidden text-[#f5f5f5]">
                 <div className="w-[15.5rem] shrink-0">
@@ -97,7 +146,8 @@ export default function About() {
             </section>
           </div>
         </div>
-      </div>
     </main>
   );
 }
+
+// Note: About.jsx disables body scrolling while mounted so the layout stays fixed.

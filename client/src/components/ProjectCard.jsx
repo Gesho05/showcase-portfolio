@@ -10,11 +10,18 @@ export default function ProjectCard({
   bottomText,
   projectLinkLabel,
   clientLabel,
+  projectYear = '2025',
+  showProjectLink = true,
+  mediaLinkEnabled = true,
   overlayBadges = ['WEB DESIGN'],
   popupBadges = ['Web Design'],
   coverObjectPosition = 'center 62%',
+  coverImageClassName = '',
   heroObjectPosition = '50% 50%',
+  heroHeightClass = 'h-[clamp(22rem,48vw,36rem)]',
   wideMediaHeightClass = 'h-[clamp(22rem,48vw,36rem)]',
+  detailImageClass = 'h-full object-cover object-[50%_22%]',
+  detailSecondImageClass = 'h-full object-cover object-[50%_22%]',
   wideMediaImageClass = 'h-full object-cover object-[50%_22%]',
   thumbnail,
   modalImages = [],
@@ -96,10 +103,22 @@ export default function ProjectCard({
 
   const renderMediaBlock = (src, altText, wrapperClassName = '', imageClassName = '', objectPosition) => {
     if (src) {
+      const mediaImage = (
+        <img className={`w-full h-auto object-contain rounded-[1.45rem] bg-[#d9d9d9] ${imageClassName}`} src={src} alt={altText} style={objectPosition ? { objectPosition } : undefined} draggable={false} onDragStart={(e) => e.preventDefault()} />
+      );
+
+      if (mediaLinkEnabled && url && url !== '#') {
+        return (
+          <a href={url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className={`block ${wrapperClassName}`}>
+            {mediaImage}
+          </a>
+        );
+      }
+
       return (
-        <a href={url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className={`block ${wrapperClassName}`}>
-          <img className={`w-full h-auto object-contain rounded-[1.45rem] bg-[#d9d9d9] ${imageClassName}`} src={src} alt={altText} style={objectPosition ? { objectPosition } : undefined} draggable={false} onDragStart={(e) => e.preventDefault()} />
-        </a>
+        <div className={`block ${wrapperClassName}`}>
+          {mediaImage}
+        </div>
       );
     }
 
@@ -120,7 +139,7 @@ export default function ProjectCard({
         {isOverlayVariant ? (
           <div className="relative h-full w-full overflow-hidden">
             <img
-              className="h-full w-full object-cover"
+              className={`h-full w-full object-cover ${coverImageClassName}`}
               src={thumbnail}
               alt={title}
               style={{ objectPosition: coverObjectPosition }}
@@ -191,19 +210,21 @@ export default function ProjectCard({
                         <span className="text-[#d6ac42]">Client</span><span className="h-px bg-white/45" /><span>{clientLabel || title.split(' ')[0] || 'PROJECT'}</span>
                       </div>
                       <div className="grid grid-cols-[auto_1fr_auto] items-center gap-2 border-b border-white/45 pb-1.5">
-                        <span className="text-[#d6ac42]">Year</span><span className="h-px bg-white/45" /><span>2025</span>
+                        <span className="text-[#d6ac42]">Year</span><span className="h-px bg-white/45" /><span>{projectYear}</span>
                       </div>
-                      <div className="grid grid-cols-[1fr] border-b border-white/45 pb-1.5 text-right">
-                        <a href={url} target="_blank" rel="noopener noreferrer" className="underline hover:text-white transition-colors normal-case">
-                          {projectLinkLabel || url}
-                        </a>
-                      </div>
+                      {showProjectLink && url && url !== '#' && (
+                        <div className="grid grid-cols-[1fr] border-b border-white/45 pb-1.5 text-right">
+                          <a href={url} target="_blank" rel="noopener noreferrer" className="underline hover:text-white transition-colors normal-case">
+                            {projectLinkLabel || url}
+                          </a>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
 
                 <div className="mt-7 rounded-[1.55rem] p-1.5 bg-[#131313]">
-                  <div className="w-full h-[clamp(22rem,48vw,36rem)] rounded-[1.45rem] overflow-hidden">
+                  <div className={`w-full ${heroHeightClass} rounded-[1.45rem] overflow-hidden`}>
                     {renderMediaBlock(modalImages[0], `${title} hero`, 'h-full', 'h-full object-cover', heroObjectPosition) }
                   </div>
                 </div>
@@ -214,8 +235,8 @@ export default function ProjectCard({
                 </div>
 
                 <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="h-[clamp(12.5rem,25vw,17rem)] rounded-[1.45rem] overflow-hidden">{renderMediaBlock(modalImages[1], `${title} detail 1`, 'h-full', 'h-full object-cover object-[50%_22%]')}</div>
-                  <div className="h-[clamp(12.5rem,25vw,17rem)] rounded-[1.45rem] overflow-hidden">{renderMediaBlock(modalImages[2], `${title} detail 2`, 'h-full', 'h-full object-cover object-[50%_22%]')}</div>
+                  <div className="h-[clamp(14rem,30vw,20rem)] rounded-[1.45rem] overflow-hidden">{renderMediaBlock(modalImages[1], `${title} detail 1`, 'h-full', detailImageClass)}</div>
+                  <div className="h-[clamp(14rem,30vw,20rem)] rounded-[1.45rem] overflow-hidden">{renderMediaBlock(modalImages[2], `${title} detail 2`, 'h-full', detailSecondImageClass)}</div>
                 </div>
 
                 <div className={`mt-4 ${wideMediaHeightClass} rounded-[1.45rem] overflow-hidden`}>

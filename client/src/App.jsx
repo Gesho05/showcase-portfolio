@@ -21,6 +21,7 @@ function App() {
   const [showHeaderGhost, setShowHeaderGhost] = useState(false)
   const [customCursorEnabled, setCustomCursorEnabled] = useState(false)
   const [cursorProjectMode, setCursorProjectMode] = useState(false)
+  const [cursorLabel, setCursorLabel] = useState('')
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false)
   const cursorRef = useRef(null)
   const cursorProjectModeRef = useRef(false)
@@ -145,10 +146,18 @@ function App() {
       cursor.style.top = `${event.clientY}px`
       cursor.style.opacity = '1'
 
-      const overProjectCard = !!event.target?.closest?.('[data-cursor-project="true"]')
+      const el = event.target?.closest?.('[data-cursor-project="true"]')
+      const overProjectCard = !!el
       if (overProjectCard !== cursorProjectModeRef.current) {
         cursorProjectModeRef.current = overProjectCard
         setCursorProjectMode(overProjectCard)
+      }
+
+      if (overProjectCard && el) {
+        const label = el.getAttribute('data-cursor-label') || 'SEE PROJECT ↗'
+        setCursorLabel(label)
+      } else {
+        setCursorLabel('')
       }
     }
 
@@ -177,6 +186,7 @@ function App() {
       if (isOpen) {
         cursorProjectModeRef.current = false
         setCursorProjectMode(false)
+        setCursorLabel('')
       }
     }
 
@@ -214,6 +224,18 @@ function App() {
       document.body.style.overflow = previousOverflow || ''
     }
   }, [isLoading])
+
+  useEffect(() => {
+    // Clear any accidental inline zoom/transform previously applied
+    try {
+      document.documentElement.style.transform = ''
+      document.documentElement.style.zoom = ''
+      document.body.style.transform = ''
+      document.body.style.zoom = ''
+    } catch (e) {
+      // ignore
+    }
+  }, [location.pathname, isLoading])
 
   useEffect(() => {
     const preventAction = (event) => {
@@ -314,12 +336,12 @@ function App() {
           }`}
           style={{ transform: 'translate(-50%, -50%)' }}
         >
-          {cursorProjectMode && (
+            {cursorProjectMode && (
             <span
               className="uppercase text-black text-[0.82rem] tracking-[0.01em] leading-none whitespace-nowrap"
               style={{ fontFamily: "'SpaceMonoBold', sans-serif" }}
             >
-              SEE PROJECT ↗
+              {cursorLabel || 'SEE PROJECT ↗'}
             </span>
           )}
         </div>
